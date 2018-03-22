@@ -23,6 +23,6 @@ git status
 git add --all .
 git commit -m "$*"
 git push
-echo "github sync sucussful"
+echo "github sync successful"
 
 exit 1
