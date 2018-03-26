@@ -15,7 +15,10 @@ public class GraphicsPanel extends JPanel {
 		//int height = frame.getHeight();
 		super.paintComponent(graphics);
 
-		// a try catch 
+		// a try catch statement is a way to safely run some code that might cause an exception
+		// without having all the code break if an exception is thrown.
+		// in this case, it might be a corrupted file, but since we know it isn't
+		// we will just throw the exception.
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, new File(
 					"fonts/Rubik/Rubik-Regular.ttf"));
