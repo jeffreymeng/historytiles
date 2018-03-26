@@ -7,7 +7,7 @@ import javax.swing.*;
 public class GraphicsPanel extends JPanel{
 	final int width = 800;
 	final int height = 600;
-	JFrame frame = new JFrame("History Tiles");
+	JFrame frame = new JFrame("Mystery Numbers");
 	public void paintComponent(Graphics graphics) {
 		int width = frame.getWidth();
 		int height = frame.getHeight();
