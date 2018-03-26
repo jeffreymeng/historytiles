@@ -13,6 +13,8 @@ public class GraphicsPanel extends JPanel{
 		int height = frame.getHeight();
 		super.paintComponent(graphics);
 		
+		//graphics.setFont(new Font("Arial", Font.SANS_SERIF));
+		//graphics.drawString("Mystery Numbers", 100, 100);
 		
 		
 	}
