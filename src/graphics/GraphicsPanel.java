@@ -11,11 +11,11 @@ public class GraphicsPanel extends JPanel {
 	JFrame frame = new JFrame("Mystery Numbers");
 
 	public void paintComponent(Graphics graphics) {
-		int width = frame.getWidth();
-		int height = frame.getHeight();
+		//int width = frame.getWidth();
+		//int height = frame.getHeight();
 		super.paintComponent(graphics);
 
-		// graphics.setFont(new Font("Arial", Font.SANS_SERIF));
+		// a try catch 
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, new File(
 					"fonts/Rubik/Rubik-Regular.ttf"));
