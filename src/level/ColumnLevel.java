@@ -1,5 +1,5 @@
 package level;
 
-public class ColumnLevel extends Level{
+public class ColumnLevel extends Level {
 
 }
