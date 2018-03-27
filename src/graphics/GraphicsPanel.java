@@ -27,7 +27,7 @@ public class GraphicsPanel extends JPanel {
 			// Need to use float otherwise
 			// it would be interpreted as style
 
-			font = font.deriveFont(40);
+			font = font.deriveFont(100.0f);
 		} catch (IOException | FontFormatException e) {
 			
 			System.out.println("ERROR init font, fallback to defualt. ERR_MSG:" + e.getMessage());
