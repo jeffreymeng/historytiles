@@ -9,7 +9,7 @@ public class GraphicsPanel extends JPanel {
 	final int width = 800;
 	final int height = 600;
 	JFrame frame = new JFrame("Mystery Numbers");
-
+	Font font;
 	public void paintComponent(Graphics graphics) {
 		//int width = frame.getWidth();
 		//int height = frame.getHeight();
@@ -20,25 +20,28 @@ public class GraphicsPanel extends JPanel {
 		// in this case, it might be a corrupted file, but since we know it isn't
 		// we will just throw the exception.
 		try {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, new File(
-					"fonts/Rubik/Rubik-Regular.ttf"));
+			font = Font.createFont(Font.TRUETYPE_FONT, new File(
+					"src/fonts/Rubik/Rubik-Regular.ttf"));
 
 			// Derive and return a 12 pt version:
 			// Need to use float otherwise
 			// it would be interpreted as style
 
-			font.deriveFont(12f);
+			font = font.deriveFont(40);
 		} catch (IOException | FontFormatException e) {
-			// this should never be thrown.
-			System.out.println(e.getMessage());
+			
+			System.out.println("ERROR init font, fallback to defualt. ERR_MSG:" + e.getMessage());
 			throw new RuntimeException(e);
+			
+			//make fallback font here, and once it works comment out exception above
+
 		}
 		graphics.drawString("Mystery Numbers", 100, 100);
 
 	}
 
 	public void setupWindow(GraphicsPanel panel) {
-
+		
 		frame.setSize(width, height);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
