@@ -1,7 +1,7 @@
 /*
- * Programmer: Jeffrey Meng and Dylan Yang
- * Date: Mar 28 2018
- * Purpose:
+ * Programmers: Jeffrey Meng and Dylan Yang
+ * Date: Mar 27, 2018
+ * Purpose: to manage the numbers in a column-format level
  */
 
 package level;
@@ -12,6 +12,7 @@ public class ColumnLevel extends Level {
 	
 	private int num1;
 	private int num2;
+	private int[][] numGrid;
 	private char operation;
 	
 	public final static char ADDITION = '+';
@@ -53,6 +54,32 @@ public class ColumnLevel extends Level {
 		int temp = num1;
 		num1 = num2;
 		num2 = temp;
+	}
+
+	public int getNum1() {
+		return num1;
+	}
+
+	public void setNum1(int num1) {
+		this.num1 = num1;
+	}
+
+	public int getNum2() {
+		return num2;
+	}
+
+	public void setNum2(int num2) {
+		this.num2 = num2;
+	}
+
+	public char getOperation() {
+		return operation;
+	}
+
+	public void setOperation(char operation) {
+		this.operation = operation;
+		if (operation == SUBTRACTION && this.num2 > this.num1)
+			swapNums();
 	}
 	
 }
