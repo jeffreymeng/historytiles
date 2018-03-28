@@ -1,3 +1,9 @@
+/*
+ * Programmer: Jeffrey Meng and Dylan Yang
+ * Date: Mar 28 2018
+ * Purpose:
+ */
+
 package level;
 
 import util.Utils;
@@ -8,10 +14,10 @@ public class ColumnLevel extends Level {
 	private int num2;
 	private char operation;
 	
-	final static char ADDITION = '+';
-	final static char SUBTRACTION = '-';
-	final static char MULTIPLICATION = '*';
-	final static char DIVISION = '/';
+	public final static char ADDITION = '+';
+	public final static char SUBTRACTION = '-';
+	public final static char MULTIPLICATION = '*';
+	public final static char DIVISION = '/';
 	
 	public ColumnLevel() {
 		this.operation = ADDITION;
