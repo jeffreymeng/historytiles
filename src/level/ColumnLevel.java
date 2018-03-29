@@ -10,7 +10,7 @@ import util.Utils;
 
 public class ColumnLevel extends Level {
 
-	private int[][] numGrid = {{}, {}, {}};
+	private Digit[][] numGrid = {{}, {}, {}};
 	private char operation;
 	private int numVariables;
 
@@ -85,15 +85,15 @@ public class ColumnLevel extends Level {
 	
 	public void fillNumGrid(int num1, int num2) {
 		String num1String = String.valueOf(num1);
-		numGrid[0] = new int[num1String.length()];
+		numGrid[0] = new Digit[num1String.length()];
 		for (int i = 0; i < num1String.length(); i++) {
-			numGrid[0][i] = Character.getNumericValue(num1String.charAt(i));
+			numGrid[0][i] = new Digit(Character.getNumericValue(num1String.charAt(i)), true);
 		}
 
 		String num2String = String.valueOf(num2);
-		numGrid[1] = new int[num2String.length()];
+		numGrid[1] = new Digit[num2String.length()];
 		for (int i = 0; i < num2String.length(); i++)
-			numGrid[1][i] = Character.getNumericValue(num2String.charAt(i));
+			numGrid[1][i] = new Digit(Character.getNumericValue(num2String.charAt(i)), true);
 	}
 
 	public char getOperation() {
@@ -115,9 +115,9 @@ public class ColumnLevel extends Level {
 	}
 
 	public void printNumGrid() { // DEBUG ONLY
-		for (int[] row : numGrid)
-			for (int col : row)
-				System.out.println(col);
+		for (Digit[] row : numGrid)
+			for (Digit col : row)
+				System.out.println((int)col.getValue());
 		System.out.println(getNumGridLength());
 	}
 
