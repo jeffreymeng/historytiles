@@ -19,10 +19,10 @@ public class GraphicsPanel extends JPanel {
 		super.paintComponent(graphics);
 		int width = frame.getWidth();
 		int height = frame.getHeight();
-		
+
 		Font rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN, 20);
 		Label title = new Label("Mystery Numbers", rubik);
-		title.draw(graphics, width, height);
+		title.draw(graphics, width, height, Label.HCENTER);
 	}
 
 	public void setupWindow(GraphicsPanel panel) {
