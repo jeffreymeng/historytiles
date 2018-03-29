@@ -22,7 +22,7 @@ public class GraphicsPanel extends JPanel {
 
 		Font rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN, 20);
 		Label title = new Label("Mystery Numbers", rubik);
-		title.draw(graphics, width, height, Label.HCENTER);
+		title.draw(graphics, width, height, Label.BOTTOM);
 	}
 
 	public void setupWindow(GraphicsPanel panel) {

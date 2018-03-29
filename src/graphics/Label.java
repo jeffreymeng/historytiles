@@ -37,12 +37,12 @@ public class Label {
 		if (options.indexOf("top") > -1) {
 			y = padding;
 		} else if (options.indexOf("bottom") > -1) {
-			y = (height - padding) + (titleHeight);
+			y = (height - padding) - (titleHeight);
 		}
 		if (options.indexOf("left") > -1) {
 			x = padding;
 		} else if (options.indexOf("right") > -1) {
-			x = (width - padding) + (titleWidth);
+			x = (width - padding) - (titleWidth);
 		}
 		
 		if ((options.indexOf("vcenter") > -1) || (y == -1)) {//defualt is center
