@@ -6,9 +6,9 @@ then
     echo "
 GITSYNC LIGHT VERSION: Current Directory only
 
-usage: gitsync <commit message(muti words OK)>
+usage: gitsync <commit message (multiple words OK)>
 
-Gitsync is a tool to help you automatically commit in github.
+Gitsync is a tool to help you automatically commit in GitHub.
 The first argument passed should be the path, relative to the base path.
 
 Your base path is: $BASE_PATH
