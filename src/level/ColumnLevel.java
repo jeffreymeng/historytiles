@@ -51,7 +51,7 @@ public class ColumnLevel extends Level {
 		
 		if (operation == SUBTRACTION && num2 > num1)
 			swapNums();
-		else if (operation == ADDITION && String.valueOf(num2).length() > String.valueOf(num1).length())
+		else if (operation == ADDITION && Utils.getDigits(num2) > Utils.getDigits(num1))
 			swapNums();
 		
 		fillNumGrid(num1, num2);

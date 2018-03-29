@@ -10,7 +10,7 @@ public class InequalityLevel extends Level {
 	
 	private char operator;
 
-	private final char LESS_THAN = '<';
-	private final char GREATER_THAN = '>';
+	private static final char LESS_THAN = '<';
+	private static final char GREATER_THAN = '>';
 	
 }
