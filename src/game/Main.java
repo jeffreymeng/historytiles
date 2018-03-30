@@ -5,8 +5,8 @@ import graphics.*;
 public class Main {
 
 	public static void main(String[] args) {
-		GraphicsPanel panel = new GraphicsPanel();
-		panel.setupWindow(panel);
+		MysteryNumbersGame game = new MysteryNumbersGame();
+		game.setupWindow();
 	}
 
 }

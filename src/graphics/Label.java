@@ -18,7 +18,7 @@ public class Label {
 	public final static String VCENTER = "vcenter";
 	public final static String HCENTER = "hcenter";
 	public final static String CENTER = VCENTER + HCENTER;
-	
+
 	// concatenate option strings to create an option modifier.
 
 	public Label(String text, Font font) {
@@ -33,7 +33,7 @@ public class Label {
 
 		int titleWidth = graphics.getFontMetrics().stringWidth(text);
 		int titleHeight = graphics.getFontMetrics().getHeight();
-		int padding = 25;// px
+		int padding = 25; // px
 		if (options.indexOf("top") > -1) {
 			y = padding;
 		} else if (options.indexOf("bottom") > -1) {
@@ -45,14 +45,16 @@ public class Label {
 			x = (width - padding) - (titleWidth);
 		}
 		System.out.println(options.indexOf("hcenter"));
-		if ((options.indexOf("vcenter") > -1) || (y == -1)) {//defualt is center
+		if ((options.indexOf("vcenter") > -1) || (y == -1)) {// Default is
+																// center
 			y = ((height / 2) - (titleHeight / 2));
-			
-		} else if ((options.indexOf("hcenter") > -1) || (x == -1)) {
-			x = ((width / 2) - (titleWidth / 2));
-			
+
 		}
-		
+		if ((options.indexOf("hcenter") > -1) || (x == -1)) {
+			x = ((width / 2) - (titleWidth / 2));
+
+		}
+
 		// we don't need to pass title because height is static across the font
 		draw(graphics, x, y);// get the top left corner
 
