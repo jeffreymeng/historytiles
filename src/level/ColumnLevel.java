@@ -13,6 +13,7 @@ public class ColumnLevel extends Level {
 	private Digit[][] numGrid = {{}, {}, {}};
 	private char operation;
 	private int numVariables;
+	//private ArrayList<int> answers;
 
 	final static char ADDITION = '+';
 	final static char SUBTRACTION = '-';
@@ -119,6 +120,17 @@ public class ColumnLevel extends Level {
 			for (Digit col : row)
 				System.out.println((int)col.getValue());
 		System.out.println(getNumGridLength());
+	}
+	
+	public void addVariables() {
+		int randRowIndex;
+		int randColIndex;
+		for (int i = 0; i < numVariables; i++) {
+			randRowIndex = Utils.randInt(0, numGrid.length);
+			randColIndex = Utils.randInt(0, randRowIndex);
+			numGrid[randRowIndex][randColIndex].getValue();
+			numGrid[randRowIndex][randColIndex].setVisible(false);
+		}
 	}
 
 	public static void main(String[] args) {
