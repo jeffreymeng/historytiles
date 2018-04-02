@@ -40,6 +40,7 @@ public class ColumnLevel extends Level {
 		this.operation = operation;
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
+		
 
 		if (operation == SUBTRACTION && num2 > num1)
 			swapNums();
