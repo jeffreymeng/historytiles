@@ -11,7 +11,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class GraphicsPanel extends JPanel implements MouseListener {
+public class TitlePanel extends JPanel implements MouseListener {
 	final int width = 800;
 	final int height = 600;
 	JFrame frame = new JFrame("Mystery Numbers");
@@ -24,12 +24,14 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 	final public Color BLUE_OUTLINE = new Color(0, 0, 179);
 	int playButtonWidth, playButtonHeight, playButtonX, playButtonY;
 	Color playButtonColor = BLUE;
-
-	public GraphicsPanel(JFrame frame) {
+	MysteryNumbersGame game;
+	
+	public TitlePanel(JFrame frame, MysteryNumbersGame game) {
 		super();
 		addMouseListener(this);
 
 		this.frame = frame;
+		this.game = game;
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -71,7 +73,7 @@ public class GraphicsPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if ((e.getX() > playButtonX && e.getX() < (playButtonX + playButtonWidth))
 				&& (e.getY() > playButtonY && e.getY() < (playButtonY + playButtonHeight))) {
-			System.out.println("Play Button Clicked");
+			game.startGame();
 		}
 
 	}
