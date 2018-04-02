@@ -146,12 +146,14 @@ public class ColumnLevel extends Level {
 	public void printNumGrid() { // for debugging
 		String text = "";
 		for (Digit[] row : numGrid) {
+			
 			for (Digit col : row) {
+
 				text += (int) col.getValue() + " ";
 			}
 			text += "\n";
 		}
-		System.out.println(text);
+		System.out.print(text);
 		System.out.println("Length: " + getNumGridLength());
 	}
 
