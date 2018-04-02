@@ -27,6 +27,12 @@ public class Label {
 	}
 
 	public void draw(Graphics graphics, int width, int height, String options) {
+		draw(graphics, width, height, options, 0, 0);
+
+	}
+
+	public void draw(Graphics graphics, int width, int height, String options,
+			int xoffset, int yoffset) {
 		int x = -1, y = -1;
 
 		graphics.setFont(font.get());
@@ -44,7 +50,6 @@ public class Label {
 		} else if (options.indexOf("right") > -1) {
 			x = (width - padding) - (titleWidth);
 		}
-		System.out.println(options.indexOf("hcenter"));
 		if ((options.indexOf("vcenter") > -1) || (y == -1)) {// Default is
 																// center
 			y = ((height / 2) - (titleHeight / 2));
@@ -54,6 +59,8 @@ public class Label {
 			x = ((width / 2) - (titleWidth / 2));
 
 		}
+		y += yoffset;
+		x += xoffset;
 
 		// we don't need to pass title because height is static across the font
 		draw(graphics, x, y);// get the top left corner

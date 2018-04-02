@@ -15,13 +15,16 @@ public class MysteryNumbersGame {
 	final int numCards = 3;
 	JFrame frame;
 	
+	public MysteryNumbersGame() {
+		frame = new JFrame("Mystery Numbers");
+
+	}
 
 	public void setupWindow() {
 		int width = 500;
 		int height = 600;
 		
-		frame = new JFrame("Mystery Numbers");
-		GraphicsPanel panel = new GraphicsPanel();
+		GraphicsPanel panel = new GraphicsPanel(frame);
 		
 		frame.setSize(width, height);
 		frame.setLocationRelativeTo(null);
