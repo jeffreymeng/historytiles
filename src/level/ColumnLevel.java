@@ -180,9 +180,9 @@ public class ColumnLevel extends Level {
 			int numCol = hiddenCoordinates[index][1];
 			numGrid[numRow][numCol].setVisible(true);
 			return true;
-		} else {
-			return false;
 		}
+		return false;
+
 	}
 
 	public static void main(String[] args) {
