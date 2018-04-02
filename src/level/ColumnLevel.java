@@ -11,12 +11,12 @@ import util.Utils;
 
 public class ColumnLevel extends Level {
 
-	private Digit[][] numGrid = {{}, {}, {}};
+	private Digit[][] numGrid = { {}, {}, {} };
 	private char operation;
 	private int numVariables;
 	private int[] answers;
 	private int[][] hiddenCoordinates;
-	//private ArrayList<int> answers;
+	// private ArrayList<int> answers;
 
 	final static char ADDITION = '+';
 	final static char SUBTRACTION = '-';
@@ -43,7 +43,9 @@ public class ColumnLevel extends Level {
 
 		if (operation == SUBTRACTION && num2 > num1)
 			swapNums();
-		else if (operation == ADDITION && String.valueOf(num2).length() > String.valueOf(num1).length())
+		else if (operation == ADDITION
+				&& String.valueOf(num2).length() > String.valueOf(num1)
+						.length())
 			swapNums();
 
 		fillNumGrid(num1, num2);
@@ -62,7 +64,8 @@ public class ColumnLevel extends Level {
 
 		if (operation == SUBTRACTION && num2 > num1)
 			swapNums();
-		else if (operation == ADDITION && Utils.getDigits(num2) > Utils.getDigits(num1))
+		else if (operation == ADDITION
+				&& Utils.getDigits(num2) > Utils.getDigits(num1))
 			swapNums();
 
 		fillNumGrid(num1, num2);
@@ -86,7 +89,8 @@ public class ColumnLevel extends Level {
 		hiddenCoordinates = new int[numVariables][2];
 	}
 
-	public ColumnLevel(char operation, int num1min, int num1max, int num2min, int num2max) {
+	public ColumnLevel(char operation, int num1min, int num1max, int num2min,
+			int num2max) {
 		this.operation = operation;
 		num1 = Utils.randInt(num1min, num1max);
 		num2 = Utils.randInt(num2min, num2max);
@@ -111,13 +115,15 @@ public class ColumnLevel extends Level {
 		String num1String = String.valueOf(num1);
 		numGrid[0] = new Digit[num1String.length()];
 		for (int i = 0; i < num1String.length(); i++) {
-			numGrid[0][i] = new Digit(Character.getNumericValue(num1String.charAt(i)), true);
+			numGrid[0][i] = new Digit(Character.getNumericValue(num1String
+					.charAt(i)), true);
 		}
 
 		String num2String = String.valueOf(num2);
 		numGrid[1] = new Digit[num2String.length()];
 		for (int i = 0; i < num2String.length(); i++)
-			numGrid[1][i] = new Digit(Character.getNumericValue(num2String.charAt(i)), true);
+			numGrid[1][i] = new Digit(Character.getNumericValue(num2String
+					.charAt(i)), true);
 	}
 
 	public char getOperation() {
@@ -133,16 +139,20 @@ public class ColumnLevel extends Level {
 	public int getNumGridLength() {
 		int sum = 0;
 		for (int i = 0; i < numGrid.length; i++)
-			for (int j = 0; j < numGrid[i].length; j++)
-				sum++;
+			sum += numGrid[i].length;
 		return sum;
 	}
 
-	public void printNumGrid() { // DEBUG ONLY
-		for (Digit[] row : numGrid)
-			for (Digit col : row)
-				System.out.println((int)col.getValue());
-		System.out.println(getNumGridLength());
+	public void printNumGrid() { // for debugging
+		String text = "";
+		for (Digit[] row : numGrid) {
+			for (Digit col : row) {
+				text += (int) col.getValue() + " ";
+			}
+			text += "\n";
+		}
+		System.out.println(text);
+		System.out.println("Length: " + getNumGridLength());
 	}
 
 	public void addVariables() {
