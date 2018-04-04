@@ -11,7 +11,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class GamePanel extends JPanel implements MouseListener {
+public class GamePanel extends JPanel implements ButtonListener {
 	final int width = 800;
 	final int height = 600;
 	JFrame frame = new JFrame("Mystery Numbers");
@@ -22,13 +22,13 @@ public class GamePanel extends JPanel implements MouseListener {
 	final public Color BLUE = new Color(0, 0, 255);
 	final public Color BLUE_DARK = new Color(0, 0, 230);
 	final public Color BLUE_OUTLINE = new Color(0, 0, 179);
-	int playButtonWidth, playButtonHeight, playButtonX, playButtonY;
-	Color playButtonColor = BLUE;
+	int resetButtonWidth, resetButtonHeight, resetButtonX, resetaButtonY;
+	Color resetButtonColor = BLUE;
 	MysteryNumbersGame game;
 	
 	public GamePanel(JFrame frame, MysteryNumbersGame game) {
 		super();
-		addMouseListener(this);
+		
 
 		this.frame = frame;
 		this.game = game;
@@ -45,57 +45,23 @@ public class GamePanel extends JPanel implements MouseListener {
 		Label title = new Label("Game", rubik);
 		title.draw(graphics, width, height, Label.CENTER, 0, -50);
 		rubik.setSize(15);
-
+		
 		// play button
-		graphics.setColor(playButtonColor);
-		// width is center, height is center + 100px offset
-
-		playButtonWidth = 150;
-		playButtonHeight = 50;
-		playButtonX = (width / 2 - (playButtonWidth / 2));
-		playButtonY = (height / 2 + ((playButtonHeight / 2) + 75/* offset */));
-
-		graphics.fillRect(playButtonX, playButtonY, playButtonWidth,
-				playButtonHeight);
-		graphics.setColor(BLUE_OUTLINE);
-		graphics.drawRect(playButtonX, playButtonY, playButtonWidth,
-				playButtonHeight);
-
-		graphics.setColor(Color.WHITE);
-		Label playButtonText = new Label("New", rubik);
-		playButtonText.draw(graphics, width, height, Label.CENTER, 0, 140);
+		Label playButtonLabel = new Label("Play", rubik, Color.WHITE);
+		Button playButton = new Button(Button.BLUE, playButtonLabel, this);
+		playButton.draw(graphics, width, height, Button.CENTER, 75, 0);
+		
 
 	}
 
-	public void mouseClicked(MouseEvent e) {
-		if ((e.getX() > playButtonX && e.getX() < (playButtonX + playButtonWidth))
-				&& (e.getY() > playButtonY && e.getY() < (playButtonY + playButtonHeight))) {
-			game.startGame();
-		}
-
+	public void buttonPressed(MouseEvent e) {
+		
 	}
 
-	public void mousePressed(MouseEvent e) {
-		if ((e.getX() > playButtonX && e.getX() < (playButtonX + playButtonWidth))
-				&& (e.getY() > playButtonY && e.getY() < (playButtonY + playButtonHeight))) {
-			playButtonColor = BLUE_DARK;
-		}
-		this.repaint();
+	public void buttonClicked(MouseEvent e) {
+		
 	}
 
-	public void mouseReleased(MouseEvent e) {
-		if (playButtonColor != BLUE) {
-			playButtonColor = BLUE;
-		}
-		this.repaint();
-	}
-
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	public void mouseExited(MouseEvent e) {
-
-	}
+	
 
 }

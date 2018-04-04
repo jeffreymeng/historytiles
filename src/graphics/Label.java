@@ -11,6 +11,7 @@ import java.awt.*;
 public class Label {
 	private String text;
 	private Font font;
+	private Color color;
 	public final static String TOP = "top";
 	public final static String BOTTOM = "bottom";
 	public final static String LEFT = "left";
@@ -24,8 +25,15 @@ public class Label {
 	public Label(String text, Font font) {
 		this.font = font;
 		this.text = text;
+		this.color = null;
+		
 	}
-
+	public Label(String text, Font font, Color color) {
+		this.font = font;
+		this.text = text;
+		this.color = color;
+		
+	}
 	public void draw(Graphics graphics, int width, int height, String options) {
 		draw(graphics, width, height, options, 0, 0);
 
@@ -68,6 +76,9 @@ public class Label {
 	}
 
 	public void draw(Graphics graphics, int x, int y) {
+		if (color != null) {
+			graphics.setColor(color);
+		}
 		graphics.drawString(text, x, y);
 	}
 
@@ -85,5 +96,14 @@ public class Label {
 
 	public void setFont(Font font) {
 		this.font = font;
+	}
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	public void clearColor() {
+		this.color = null;
 	}
 }

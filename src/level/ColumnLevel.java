@@ -154,7 +154,11 @@ public class ColumnLevel extends Level {
 		System.out.print(text);
 		System.out.println("Length: " + getNumGridLength());
 	}
-
+	
+	public Digit[][] getNumGrid() {
+		return numGrid;
+	}
+	
 	public void addVariables() {
 		int randRowIndex;
 		int randColIndex;
