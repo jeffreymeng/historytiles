@@ -6,15 +6,14 @@
 
 package level;
 
-import java.util.*;
 import util.Utils;
 
 public class ColumnLevel extends Level {
 
-	private Digit[][] numGrid = { {/* first number */}, {/* second number */}, {/* third number */} };
+	private Digit[][] numGrid = { {/* first number */}, {/* second number */}, {/* sum */} };
 	private int numVariables;
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format {row, column, answer}
-	 /*private int[] answers;
+	/*private int[] answers;
 	private int[][] hiddenCoordinates; // effectively an array of 2-tuples recording the row and column of hidden digits */
 	private char operation; // should be one of the final static variables below
 
@@ -30,7 +29,7 @@ public class ColumnLevel extends Level {
 
 		fillNumGrid(num1, num2);
 
-		numVariables = getNumGridLength() / 3;
+		numVariables = 2;
 
 		hiddenDigits = new int[numVariables][3];
 	}
@@ -39,20 +38,20 @@ public class ColumnLevel extends Level {
 		this.operation = operation;
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
-		
+
 
 		if (operation == SUBTRACTION && num2 > num1)
 			swapNums();
 		else if (operation == ADDITION
 				&& String.valueOf(num2).length() > String.valueOf(num1)
-						.length())
+				.length())
 			swapNums();
 
 		fillNumGrid(num1, num2);
 
-		numVariables = getNumGridLength() / 3;
+		numVariables = 2;
 
-		hiddenDigits = new int[numVariables][3];
+		hiddenDigits = new int[numVariables][4];
 	}
 
 	public ColumnLevel(char operation, int numVariables) {
@@ -118,10 +117,35 @@ public class ColumnLevel extends Level {
 
 		String num2String = String.valueOf(num2);
 		numGrid[1] = new Digit[num2String.length()];
-		for (int i = 0; i < num2String.length(); i++)
+		for (int i = 0; i < num2String.length(); i++) {
 			numGrid[1][i] = new Digit(Character.getNumericValue(num2String
 					.charAt(i)), true);
-		// splits num2String into individual digits
+			// splits num2String into individual digits
+		}
+
+		String resultString;
+		switch(operation) {
+		case ADDITION:
+			resultString = String.valueOf(num1 + num2);
+			break;
+		case SUBTRACTION:
+			resultString = String.valueOf(num1 - num2);
+			break;
+		case MULTIPLICATION:
+			resultString = String.valueOf(num1 * num2);
+			break;
+		case DIVISION:
+			resultString = String.valueOf(num1 / num2);
+			break;
+		default:
+			resultString = "";
+			break;
+		}
+
+		numGrid[2] = new Digit[resultString.length()];
+		for (int i = 0; i < resultString.length(); i++) {
+			numGrid[2][i] = new Digit( Character.getNumericValue( resultString.charAt(i) ), true );
+		}
 	}
 
 	public char getOperation() {
@@ -130,7 +154,7 @@ public class ColumnLevel extends Level {
 
 	public void setOperation(char operation) {
 		this.operation = operation;
-		if (operation == SUBTRACTION && this.num2 > this.num1)
+		if (operation == SUBTRACTION && num2 > num1)
 			swapNums();
 	}
 
@@ -142,9 +166,10 @@ public class ColumnLevel extends Level {
 	}
 
 	public void printNumGrid() { // for debugging
+		System.out.println("numGrid");
 		String text = "";
 		for (Digit[] row : numGrid) {
-			
+
 			for (Digit col : row) {
 
 				text += (int) col.getValue() + " ";
@@ -159,19 +184,23 @@ public class ColumnLevel extends Level {
 		int randRowIndex;
 		int randColIndex;
 		for (int i = 0; i < numVariables; i++) {
+			System.out.println("i = " + i);
+			System.out.println("numGrid.length = " + numGrid.length);
 			randRowIndex = Utils.randInt(0, numGrid.length);
 			randColIndex = Utils.randInt(0, numGrid[1].length);
+			System.out.println("randRowIndex = " + randRowIndex);
+			System.out.println("randColIndex = " + randColIndex);
 			hiddenDigits[i][0] = randRowIndex;
 			hiddenDigits[i][1] = randColIndex;
+			System.out.println(numGrid[randRowIndex][randColIndex].getValue());
 			hiddenDigits[i][2] = numGrid[randRowIndex][randColIndex].getValue();
-			/*answers[i] = numGrid[randRowIndex][randColIndex].getValue();
-			hiddenCoordinates[i][0] = randRowIndex;
-			hiddenCoordinates[i][1] = randColIndex;*/
 			numGrid[randRowIndex][randColIndex].setVisible(false);
 		}
-		
-		for (int i = 0; i < hiddenDigits.length; i++)
+
+		System.out.println("BEFORE SORTING");
+		for (int i = 0; i < hiddenDigits.length; i++) {
 			System.out.println(hiddenDigits[i][0] + " " + hiddenDigits[i][1] + " " + hiddenDigits[i][2]);
+		}
 
 		int[] temp;
 
@@ -188,16 +217,11 @@ public class ColumnLevel extends Level {
 				}
 			}
 		}
-		
-		//Arrays.sort(hiddenDigits); // sorts
-		
-		for (int i = 0; i < hiddenDigits.length; i++)
-			System.out.println(hiddenDigits[i][0] + "  " + hiddenDigits[i][1] + "  " + hiddenDigits[i][2]);
-		
-		/*Arrays.sort(answers);
-		Arrays.sort(hiddenCoordinates);
-		for (int i = 0; i < hiddenCoordinates.length; i++)
-			Arrays.sort(hiddenCoordinates[i]);*/
+
+		System.out.println("AFTER SORTING");
+		for (int i = 0; i < hiddenDigits.length; i++) {
+			System.out.println(hiddenDigits[i][0] + " " + hiddenDigits[i][1] + " " + hiddenDigits[i][2]);
+		}
 
 	}
 

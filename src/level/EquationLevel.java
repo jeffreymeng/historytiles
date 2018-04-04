@@ -28,11 +28,13 @@ public class EquationLevel extends Level {
 	
 	public EquationLevel(String format) {
 		this.format = format;
+		/*
 		for (int i = 0; i < this.format.length(); i++) {
 			switch (this.format.charAt(i)) {
 			case 'x':
 				equation[i] = new Digit
 			}
 		}
+		*/
 	}
 }
