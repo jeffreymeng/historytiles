@@ -13,8 +13,6 @@ public class ColumnLevel extends Level {
 	private Digit[][] numGrid = { {/* first number */}, {/* second number */}, {/* sum */} };
 	private int numVariables;
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format {row, column, answer}
-	/*private int[] answers;
-	private int[][] hiddenCoordinates; // effectively an array of 2-tuples recording the row and column of hidden digits */
 	private char operation; // should be one of the final static variables below
 
 	final static char ADDITION = '+';
@@ -26,6 +24,9 @@ public class ColumnLevel extends Level {
 		this.operation = ADDITION;
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
+
+		if (Utils.getDigits(num2) > Utils.getDigits(num1))
+			swapNums();
 
 		fillNumGrid(num1, num2);
 
@@ -39,12 +40,9 @@ public class ColumnLevel extends Level {
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
 
-
-		if (operation == SUBTRACTION && num2 > num1)
-			swapNums();
-		else if (operation == ADDITION
-				&& String.valueOf(num2).length() > String.valueOf(num1)
-				.length())
+		if (operation == SUBTRACTION && num2 > num1
+				|| operation == ADDITION
+				&& Utils.getDigits(num2) > Utils.getDigits(num1))
 			swapNums();
 
 		fillNumGrid(num1, num2);
@@ -60,9 +58,8 @@ public class ColumnLevel extends Level {
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
 
-		if (operation == SUBTRACTION && num2 > num1)
-			swapNums();
-		else if (operation == ADDITION
+		if (operation == SUBTRACTION && num2 > num1
+				|| operation == ADDITION
 				&& Utils.getDigits(num2) > Utils.getDigits(num1))
 			swapNums();
 
@@ -75,12 +72,14 @@ public class ColumnLevel extends Level {
 		this.operation = operation;
 		this.num1 = num1;
 		this.num2 = num2;
-		if (operation == SUBTRACTION && this.num2 > this.num1)
+		if (operation == SUBTRACTION && this.num2 > this.num1
+				|| operation == ADDITION
+				&& Utils.getDigits(num2) > Utils.getDigits(num1))
 			swapNums();
 
 		fillNumGrid(num1, num2);
 
-		numVariables = getNumGridLength() / 3;
+		numVariables = 2;
 
 		hiddenDigits = new int[numVariables][3];
 	}
@@ -92,10 +91,13 @@ public class ColumnLevel extends Level {
 		num2 = Utils.randInt(num2min, num2max);
 		if (operation == SUBTRACTION && this.num2 > this.num1)
 			swapNums();
+		else if (operation == ADDITION
+				&& Utils.getDigits(num2) > Utils.getDigits(num1))
+			swapNums();
 
 		fillNumGrid(num1, num2);
 
-		numVariables = getNumGridLength() / 3;
+		numVariables = 2;
 
 		hiddenDigits = new int[numVariables][3];
 	}
@@ -124,7 +126,7 @@ public class ColumnLevel extends Level {
 		}
 
 		String resultString;
-		switch(operation) {
+		switch (operation) {
 		case ADDITION:
 			resultString = String.valueOf(num1 + num2);
 			break;
@@ -154,7 +156,9 @@ public class ColumnLevel extends Level {
 
 	public void setOperation(char operation) {
 		this.operation = operation;
-		if (operation == SUBTRACTION && num2 > num1)
+		if (operation == SUBTRACTION && num2 > num1
+				|| operation == ADDITION 
+				&& Utils.getDigits(num2) > Utils.getDigits(num1))
 			swapNums();
 	}
 
@@ -179,11 +183,11 @@ public class ColumnLevel extends Level {
 		System.out.print(text);
 		System.out.println("Length: " + getNumGridLength());
 	}
-	
+
 	public Digit[][] getNumGrid() {
 		return numGrid;
 	}
-	
+
 	public void addVariables() {
 		int randRowIndex;
 		int randColIndex;
@@ -240,10 +244,20 @@ public class ColumnLevel extends Level {
 
 	}
 
+	public int[] getAnswers() {
+		int[] answers =  new int[hiddenDigits.length];
+		for (int i = 0; i < hiddenDigits.length; i++)
+			answers[i] = hiddenDigits[i][2];
+		return answers;
+	}
+
 	public static void main(String[] args) {
 		ColumnLevel cl = new ColumnLevel(ColumnLevel.ADDITION);
 		cl.printNumGrid();
 		cl.addVariables();
+		int[] answers = cl.getAnswers();
+		Utils.printArray(answers);
+		System.out.println(cl.fill(0, answers[0]));
 	}
 
 }
