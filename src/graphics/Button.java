@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 public class Button implements MouseListener{
+	ButtonListener buttonInterface;
 	private Color color;
 	private Label label;
 	private int x, y, width, height;
@@ -37,16 +38,18 @@ public class Button implements MouseListener{
 		this.panel = panel;
 		
 	}
-
+	
 	public Button(Color color, Label label, Color labelColor, JPanel panel) {
 		this.color = color;
 		label.setColor(labelColor);
 		this.label = label;
-		panel.addMouseListener(this);
 		this.panel = panel;
 
 	}
-
+	public void addButtonListener(ButtonListener listener) {
+		buttonInterface = listener;
+		panel.addMouseListener(this);
+	}
 	public void draw(Graphics graphics, int width, int height, String options) {
 		draw(graphics, width, height, options, 0, 0);
 
@@ -54,29 +57,33 @@ public class Button implements MouseListener{
 
 	public void draw(Graphics graphics, int width, int height, String options,
 			int xoffset, int yoffset) {
-		int x = -1, y = -1;
+		int panelWidth = panel.getWidth();
+		int panelHeight = panel.getHeight();
+		int x = -1;
+		int y = -1;
 
 		int padding = 25; // px
 
 		if (options.indexOf("top") > -1) {
 			y = padding;
 		} else if (options.indexOf("bottom") > -1) {
-			y = (height - padding) - (height);
+			y = (panelHeight - padding) - (height);
 		}
 		if (options.indexOf("left") > -1) {
 			x = padding;
 		} else if (options.indexOf("right") > -1) {
-			x = (width - padding) - (width);
+			x = (panelWidth - padding) - (width);
 		}
-		if ((options.indexOf("vcenter") > -1) || (y == -1)) {// Default is
-																// center
-			y = ((height / 2) - (height / 2));
+		if ((options.indexOf("vcenter") > -1) || (y == -1)) {// Default is center
+			y = ((panelHeight / 2) - (height / 2));
 
 		}
 		if ((options.indexOf("hcenter") > -1) || (x == -1)) {
-			x = ((width / 2) - (width / 2));
+			x = ((panelWidth / 2) - (width / 2));
 
 		}
+		System.out.println(x);
+		System.out.println(y);
 		y += yoffset;
 		x += xoffset;
 
@@ -87,16 +94,13 @@ public class Button implements MouseListener{
 	public void draw(Graphics graphics, int x, int y, int width, int height) {
 		this.height = height;
 		this.width = width;
-
 		graphics.setColor(color);
+		System.out.println(pressed);
 		if (pressed) {
 			graphics.setColor(color.darker());
 		}
-		// width is center, height is center + 100px offset
-
-		x = (width / 2 - (width / 2));
-		y = (height / 2 + ((height / 2) + 75/* offset */));
-
+	
+		
 		graphics.fillRect(x, y, width, height);
 		graphics.setColor(color.darker().darker());
 		graphics.drawRect(x, y, width, height);
@@ -104,6 +108,7 @@ public class Button implements MouseListener{
 			graphics.setColor(Color.white);
 			// temporarily set the color to white
 		}
+		//TODO: do math to center label
 		label.draw(graphics, width, height, Label.CENTER, 0, 140);
 	}
 
@@ -111,7 +116,7 @@ public class Button implements MouseListener{
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			// callback
-			buttonClicked(e);
+			buttonInterface.buttonClicked(e);
 		}
 
 	}
@@ -120,13 +125,15 @@ public class Button implements MouseListener{
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			pressed = true;
+			buttonInterface.buttonPressed(e);
 		}
 		panel.repaint();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (color != BLUE) {
-			color = BLUE;
+		if (pressed) {
+			pressed = false;
+			buttonInterface.buttonReleased(e);
 		}
 		panel.repaint();
 	}
