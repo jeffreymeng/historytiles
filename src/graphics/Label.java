@@ -89,6 +89,7 @@ public class Label {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
 
 	public Font getFont() {
 		return font;

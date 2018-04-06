@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-public class Button implements MouseListener{
+public class Button implements MouseListener {
 	ButtonListener buttonInterface;
 	private Color color;
 	private Label label;
@@ -36,9 +36,9 @@ public class Button implements MouseListener{
 		this.label = label;
 		panel.addMouseListener(this);
 		this.panel = panel;
-		
+
 	}
-	
+
 	public Button(Color color, Label label, Color labelColor, JPanel panel) {
 		this.color = color;
 		label.setColor(labelColor);
@@ -46,10 +46,12 @@ public class Button implements MouseListener{
 		this.panel = panel;
 
 	}
+
 	public void addButtonListener(ButtonListener listener) {
 		buttonInterface = listener;
 		panel.addMouseListener(this);
 	}
+
 	public void draw(Graphics graphics, int width, int height, String options) {
 		draw(graphics, width, height, options, 0, 0);
 
@@ -64,17 +66,19 @@ public class Button implements MouseListener{
 
 		int padding = 25; // px
 
+		// to center something horizontally, we take half of the width, then we
+		// subtract half of the width. That way, when we draw it, the center of
+		// the text will be exactly on the center of the panel.
+
 		if (options.indexOf("top") > -1) {
 			y = padding;
 		} else if (options.indexOf("bottom") > -1) {
 			y = (panelHeight - padding) - (height);
-		}
-		if (options.indexOf("left") > -1) {
-			x = padding;
 		} else if (options.indexOf("right") > -1) {
 			x = (panelWidth - padding) - (width);
 		}
-		if ((options.indexOf("vcenter") > -1) || (y == -1)) {// Default is center
+		if ((options.indexOf("vcenter") > -1) || (y == -1)) {// Default is
+																// center
 			y = ((panelHeight / 2) - (height / 2));
 
 		}
@@ -82,8 +86,7 @@ public class Button implements MouseListener{
 			x = ((panelWidth / 2) - (width / 2));
 
 		}
-		System.out.println(x);
-		System.out.println(y);
+
 		y += yoffset;
 		x += xoffset;
 
@@ -95,12 +98,11 @@ public class Button implements MouseListener{
 		this.height = height;
 		this.width = width;
 		graphics.setColor(color);
-		System.out.println(pressed);
+		// System.out.println(pressed);
 		if (pressed) {
 			graphics.setColor(color.darker());
 		}
-	
-		
+
 		graphics.fillRect(x, y, width, height);
 		graphics.setColor(color.darker().darker());
 		graphics.drawRect(x, y, width, height);
@@ -108,8 +110,22 @@ public class Button implements MouseListener{
 			graphics.setColor(Color.white);
 			// temporarily set the color to white
 		}
-		//TODO: do math to center label
-		label.draw(graphics, width, height, Label.CENTER, 0, 140);
+
+		graphics.setFont(label.getFont().get());// set the font for font metrics
+		int labelWidth = graphics.getFontMetrics().stringWidth(label.getText());
+		int labelHeight = graphics.getFontMetrics().getHeight();
+
+		System.out.println(label.getFont().getSize());
+
+		// (center of rectangle x) - (half of the rectangle width)
+		int labelX = (x + (width / 2)) - (labelWidth / 2);
+		System.out.println(y);
+		System.out.println(labelHeight);
+
+		int labelY = (y + (height / 2)) - (labelHeight / 2);
+		System.out.println(labelY);
+
+		label.draw(graphics, labelX, labelY);
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -126,16 +142,18 @@ public class Button implements MouseListener{
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			pressed = true;
 			buttonInterface.buttonPressed(e);
+			panel.repaint();
 		}
-		panel.repaint();
+
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		if (pressed) {
 			pressed = false;
 			buttonInterface.buttonReleased(e);
+			panel.repaint();
 		}
-		panel.repaint();
+
 	}
 
 	public void mouseEntered(MouseEvent e) {
