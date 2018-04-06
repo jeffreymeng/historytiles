@@ -12,10 +12,21 @@ public class Utils {
 	public static int randInt(int min, int max) {
 		return ThreadLocalRandom.current().nextInt(min, max);
 	}
+	
+	/**
+	 * @param number the number to return the number of digits of
+	 * @return the number of digits in number
+	 */
 	public static int getDigits(int number) {
 		return (int)(Math.log10(number)+1);
 		//basically, log10 returns log base 10 of the number. Our number isn't exactly a multiple of 10(probably), so we cast it as an int.
 	}
+	
+	/**
+	 * @param number
+	 * @param digit
+	 * @return the nth digit in number where n = digit
+	 */
 	public static int getDigit(int number, int digit) {
 		//The nth digit is (the remainder of dividing by 10^n) divided by 10^n-1
 		for (int i = 0; i < getDigits(number); i ++) {
@@ -26,22 +37,9 @@ public class Utils {
 
 	}
 	
-	public static void ascendingExchangeSort(int[] array) {
-
-		int temp;
-
-		for (int i = 0; i < array.length - 1; i++) {
-			for (int j = i + 1; j < array.length; j++) 	{
-				if (array[i] > array[j]) {
-					temp = array[i];
-					array[i] = array[j];
-					array[j] = temp;
-				}
-			}
-		}
-
-	}
-	
+	/**
+	 * @param num the array to be printed
+	 */
 	public static void printArray(int[] num) {
 
 		System.out.print("[");

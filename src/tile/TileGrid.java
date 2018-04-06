@@ -1,7 +1,7 @@
 /*
- * Programmer: Jeffrey Meng
+ * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 22, 2018
- * Purpose:
+ * Purpose: TODO
  */
 
 package tile;

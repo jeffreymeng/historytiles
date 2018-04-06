@@ -49,16 +49,25 @@ public class GamePanel extends JPanel implements ButtonListener {
 		// play button
 		Label playButtonLabel = new Label("Play", rubik, Color.WHITE);
 		Button playButton = new Button(Button.BLUE, playButtonLabel, this);
-		playButton.draw(graphics, width, height, Button.CENTER, 75, 0);
+		playButton.addButtonListener(this);
+		playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
 		
 
 	}
 
 	public void buttonPressed(MouseEvent e) {
+		System.out.println("Button pressed");
 		
 	}
 
 	public void buttonClicked(MouseEvent e) {
+		System.out.println("Button clicked");
+		System.out.println(e);
+	}
+	
+
+	public void buttonReleased(MouseEvent e) {
+		System.out.println("Button released");
 		
 	}
 
