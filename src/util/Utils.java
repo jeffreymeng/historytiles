@@ -23,18 +23,26 @@ public class Utils {
 	}
 	
 	/**
-	 * @param number
-	 * @param digit
-	 * @return the nth digit in number where n = digit
+	 * Finds the nth digit of a number
+	 * @param number the number to find the nth digit of
+	 * @param digit  the index of the digit
+	 * @return the nth digit in of the number
 	 */
 	public static int getDigit(int number, int digit) {
-		//The nth digit is (the remainder of dividing by 10^n) divided by 10^n-1
-		for (int i = 0; i < getDigits(number); i ++) {
-			
-		}
 		
-		return 0;//for now
-
+		// The nth digit of a number is (the remainder of the number divided by 10^n) divided by 10^n-1.
+		// Note that in this case each digit of a number is indexed from right to left.
+		// return (int) ( (number % Math.pow(10.0, (double)digit)) / Math.pow(10.0, (double)digit - 1) );
+		
+		// To find the nth digit of a number, first truncate it by n digits so that the last digit is the one requested.
+		// Then find the remainder of dividing by 10, which gives the last digit
+		// Note that each digit of a number is indexed from right to left, starting at 0.
+		for (int i = 0; i < digit; i++)
+			number /= 10; // effectively truncates number by one digit due to integer division
+		
+		return number % 10;
+		
+		// return 0;//for now
 	}
 	
 	/**
@@ -50,5 +58,14 @@ public class Utils {
 		}
 		System.out.print("]");
 
+	}
+	
+	// debugging tests
+	public static void main(String[] args) {
+		System.out.println(getDigit(12345, 0));
+		System.out.println(getDigit(12345, 1));
+		System.out.println(getDigit(12345, 2));
+		System.out.println(getDigit(12345, 3));
+		System.out.println(getDigit(12345, 4));
 	}
 }
