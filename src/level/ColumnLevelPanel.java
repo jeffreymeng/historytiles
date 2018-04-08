@@ -24,38 +24,9 @@ public class ColumnLevelPanel extends JPanel {
 	public void setupWindow(ColumnLevelPanel p) {
 		JFrame f = new JFrame("Column Level Panel");
 		
-		Digit[][] numGrid = level.getNumGrid();
-		
-		// find the maximum number of digits in any number
-		// store that number of digits in maxNumLength
-		int maxNumLength = 0;
-		for (int i = 0; i < numGrid.length; i++)
-			if (numGrid[i].length > maxNumLength)
-				maxNumLength = numGrid[i].length;
-		
-		// fill numGrid but with numbers right-aligned
-		// numbers are aligned as they would if the problem were being done on paper
-		Digit[][] alignedNumGrid = new Digit[numGrid.length][maxNumLength];
-		for (int i = 0; i < numGrid.length; i++)
-			for (int j = 0; j < numGrid[i].length; j++)
-				alignedNumGrid[i][j + (maxNumLength - numGrid[i].length)] = numGrid[i][j];
-		
-		level.printNumGrid();
-		
-		for (Digit[] row : alignedNumGrid) {
-			for (Digit num : row) {
-				if (num instanceof Digit)
-					System.out.print(num.getValue() + " ");
-				else
-					System.out.print("- ");
-			}
-			System.out.println();
-		}
-		
-		/*
-		for (int i = 0; i < alignedNumGrid.length; i++)
-			for (int j = 0; i < alignedNumGrid[i].length; j++)
-				if ( alignedNumGrid[i][j] instanceof  ) */
+		//Digit[][] numGrid = level.getNumGrid();
+		Digit[][] alignedNumGrid = level.getAlignedNumGrid();
+		int maxNumLength = level.getMaxNumLength();
 
 		f.setLayout( new GridLayout( maxNumLength, alignedNumGrid.length ));
 		
