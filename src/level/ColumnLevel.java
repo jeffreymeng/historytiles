@@ -9,8 +9,8 @@ package level;
 import util.Utils;
 
 public class ColumnLevel extends Level {
-
 	private Digit[][] numGrid = { {/* first number */}, {/* second number */}, {/* sum/difference/product/quotient */} };
+	private Digit[][] alignedNumGrid = { {}, {}, {} }; // same as numGrid except all numbers are right-aligned
 	private int numVariables;
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format {row, column, answer}
 	// stores answers and their locations in numGrid
@@ -189,6 +189,7 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
+	 * Get the length of numGrid
 	 * @return the number of objects in numGrid
 	 */
 	public int getNumGridLength() {
@@ -219,7 +220,7 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
-	 * Adds variables in random locations and stores them in hiddenDigits
+	 * Adds variables in random locations and stores them in hiddenDigits.
 	 */
 	public void addVariables() {
 		int randRowIndex;
@@ -260,6 +261,12 @@ public class ColumnLevel extends Level {
 		}
 	}
 
+	/**
+	 * Attempts to fill an empty slot with a number.
+	 * @param index  the index of the empty slot to fill
+	 * @param number the number to input
+	 * @return whether the number is correct, as a boolean
+	 */
 	public boolean fill(int index, int number) {
 		if (hiddenDigits[index][2] == number) {
 			int numRow = hiddenDigits[index][0];
@@ -271,6 +278,10 @@ public class ColumnLevel extends Level {
 
 	}
 
+	/**
+	 * Get the correct answers.
+	 * @return an int array of answers
+	 */
 	public int[] getAnswers() {
 		int[] answers =  new int[hiddenDigits.length];
 		for (int i = 0; i < hiddenDigits.length; i++)
@@ -278,10 +289,21 @@ public class ColumnLevel extends Level {
 		return answers;
 	}
 
+	/**
+	 * Get a digit at a specified location on the numGrid.
+	 * @param row the row of the digit
+	 * @param col the column of the digit
+	 * @return the Digit object at the specified row and column
+	 */
 	public Digit getDigit(int row, int col) {
 		return numGrid[row][col];
 	}
 
+	/**
+	 * Get the Digit objects in a specified row of numGrid.
+	 * @param index the index of the row
+	 * @return a Digit array of each Digit in the specified row
+	 */
 	public Digit[] getRow(int index) {
 		return numGrid[index];
 	}
