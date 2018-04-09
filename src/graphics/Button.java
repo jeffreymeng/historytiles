@@ -20,6 +20,7 @@ public class Button implements MouseListener {
 	private int x, y, width, height;
 	private JPanel panel;
 	private boolean pressed = false;
+	
 	public final static String TOP = "top";
 	public final static String BOTTOM = "bottom";
 	public final static String LEFT = "left";
@@ -27,6 +28,7 @@ public class Button implements MouseListener {
 	public final static String VCENTER = "vcenter";
 	public final static String HCENTER = "hcenter";
 	public final static String CENTER = VCENTER + HCENTER;
+	
 	public final static Color BLUE = new Color(0, 0, 255);
 
 	// concatenate option strings to create an option modifier.
@@ -95,10 +97,12 @@ public class Button implements MouseListener {
 	}
 
 	public void draw(Graphics graphics, int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
 		this.height = height;
 		this.width = width;
 		graphics.setColor(color);
-		// System.out.println(pressed);
+		
 		if (pressed) {
 			graphics.setColor(color.darker());
 		}
@@ -106,29 +110,35 @@ public class Button implements MouseListener {
 		graphics.fillRect(x, y, width, height);
 		graphics.setColor(color.darker().darker());
 		graphics.drawRect(x, y, width, height);
+		
+		//no color is set
 		if (label.getColor() == null) {
 			graphics.setColor(Color.white);
 			// temporarily set the color to white
+			// this does not override the Label
 		}
 
 		graphics.setFont(label.getFont().get());// set the font for font metrics
 		int labelWidth = graphics.getFontMetrics().stringWidth(label.getText());
 		int labelHeight = graphics.getFontMetrics().getHeight();
 
-		System.out.println(label.getFont().getSize());
 
 		// (center of rectangle x) - (half of the rectangle width)
-		int labelX = (x + (width / 2)) - (labelWidth / 2);
-		System.out.println(y);
-		System.out.println(labelHeight);
+		int labelX = (x + (width / 
+				   2)) - (labelWidth / 2);
+		
 
 		int labelY = (y + (height / 2)) - (labelHeight / 2);
+		System.out.println(y);
+		System.out.println(height);
+		System.out.println(labelHeight);
 		System.out.println(labelY);
-
 		label.draw(graphics, labelX, labelY);
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		
+		//check if the click was inside the button
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			// callback
@@ -138,10 +148,15 @@ public class Button implements MouseListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
+		
+		//check if the press was inside the button
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
-			pressed = true;
+			
+			this.pressed = true;
+			
 			buttonInterface.buttonPressed(e);
+			System.out.println(pressed);
 			panel.repaint();
 		}
 
