@@ -24,6 +24,8 @@ public class TitlePanel extends JPanel implements MouseListener {
 	final public Color BLUE_OUTLINE = new Color(0, 0, 179);
 	int playButtonWidth, playButtonHeight, playButtonX, playButtonY;
 	Color playButtonColor = BLUE;
+	
+	
 	MysteryNumbersGame game;
 	
 	public TitlePanel(JFrame frame, MysteryNumbersGame game) {

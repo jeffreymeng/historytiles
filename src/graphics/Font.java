@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 //this class is basically a holder for the basic font class, except 
-// mabye extend Font?
+// Maybe extend Font in the future?
 public class Font {
 	private java.awt.Font font;
 	private float size;
@@ -30,7 +30,7 @@ public class Font {
 			// can't think of a descriptive name for this class other than Font.
 			this.size = size;
 			font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-					new File(location));// size is a float
+					new File(location));
 
 			// font = font
 		} catch (IOException | FontFormatException e) {

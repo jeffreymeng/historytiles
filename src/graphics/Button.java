@@ -124,11 +124,10 @@ public class Button implements MouseListener {
 
 
 		// (center of rectangle x) - (half of the rectangle width)
-		int labelX = (x + (width / 
-				   2)) - (labelWidth / 2);
+		int labelX = (x + (width / 2)) - (labelWidth / 2);
 		
-
-		int labelY = (y + (height / 2)) - (labelHeight / 2);
+		//TODO: remove the +15px and get it to work
+		int labelY = (y + (height / 2)) - (labelHeight / 2) + 15;
 		System.out.println(y);
 		System.out.println(height);
 		System.out.println(labelHeight);
@@ -137,12 +136,12 @@ public class Button implements MouseListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		
+		System.out.println(e.getY());
 		//check if the click was inside the button
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			// callback
-			buttonInterface.buttonClicked(e);
+			//buttonInterface.buttonClicked(e);
 		}
 
 	}
@@ -153,11 +152,10 @@ public class Button implements MouseListener {
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			
-			this.pressed = true;
+			//this.pressed = true;
 			
-			buttonInterface.buttonPressed(e);
-			System.out.println(pressed);
-			panel.repaint();
+			//buttonInterface.buttonPressed(e);
+			//panel.repaint();
 		}
 
 	}
@@ -165,8 +163,8 @@ public class Button implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		if (pressed) {
 			pressed = false;
-			buttonInterface.buttonReleased(e);
-			panel.repaint();
+			//buttonInterface.buttonReleased(e);
+			//panel.repaint();
 		}
 
 	}

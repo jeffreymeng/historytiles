@@ -38,10 +38,12 @@ public class GamePanel extends JPanel implements ButtonListener {
 				50);
 
 		title = new Label("Game", rubik);
+		System.out.println(title.getFont().getSize());
 		rubik.setSize(15);
+		System.out.println(title.getFont().getSize());
 		playButtonLabel = new Label("Play", rubik, Color.WHITE);
 
-		playButton = new Button(Button.BLUE, playButtonLabel, this);
+		playButton = new Button(Color.BLUE, playButtonLabel, this);
 		playButton.addButtonListener(this);
 	}
 
@@ -49,7 +51,7 @@ public class GamePanel extends JPanel implements ButtonListener {
 		super.paintComponent(graphics);
 		int width = frame.getWidth();
 		int height = frame.getHeight();
-
+		System.out.println(title.getFont().getSize());
 		title.draw(graphics, width, height, Label.CENTER, 0, -50);
 
 		playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
