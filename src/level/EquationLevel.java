@@ -17,6 +17,10 @@ public class EquationLevel extends Level {
 	final static String CONSTANT_LEFT = "constant-left"; // x + a = b
 	final static String DIVIDE_VARIABLE = "divide-variable"; // x/a = b
 	final static String DIVIDE_LEFT = "divide-left"; // (x + a)/b = c; shown in combination with CONSTANT_LEFT
+	
+	public EquationLevel(String... modifiers) {
+		
+	}
 }
 
 /*
