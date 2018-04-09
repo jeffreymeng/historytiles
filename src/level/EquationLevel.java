@@ -7,6 +7,16 @@
 package level;
 
 public class EquationLevel extends Level {
+	
+	final static String COEFFICIENT = "coefficient"; // ax = b
+	final static String 
+	
+}
+
+/*
+package level;
+
+public class EquationLevel extends Level {
 	private String format;
 	/*
 	 * Format:
@@ -22,7 +32,7 @@ public class EquationLevel extends Level {
 	 *  
 	 *  Operators are not implied (e.g. "xn" refers to a single two-digit number with a blank tens digit, not "x * n").
 	 *  Spaces are ignored.
-	 */
+	 
 	
 	private Object[] equation;
 	
@@ -35,6 +45,7 @@ public class EquationLevel extends Level {
 				equation[i] = new Digit
 			}
 		}
-		*/
+		
 	}
 }
+*/
