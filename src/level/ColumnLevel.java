@@ -415,7 +415,7 @@ public class ColumnLevel extends Level {
 		cl.printNumGrid();
 		cl.addVariables();
 		int[] answers = cl.getAnswers();
-		Utils.printArray(answers);
+		//Utils.printArray(answers);
 		System.out.println(cl.fill(0, answers[0]));
 	}
 }
