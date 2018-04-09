@@ -30,9 +30,7 @@ public class ColumnLevel extends Level {
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
 
-		// if num2 has more digits than num1
-		if (Utils.getDigits(num2) > Utils.getDigits(num1))
-			swapNums();
+		checkNums();
 
 		fillNumGrid(num1, num2);
 
@@ -51,11 +49,7 @@ public class ColumnLevel extends Level {
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
 
-		// if:	 operation is subtraction and num2 > num1
-		//    or operation is addition and num2 has more digits than num1
-		// then: switch num1 and num2
-		if (operation == SUBTRACTION && num2 > num1 || operation == ADDITION && Utils.getDigits(num2) > Utils.getDigits(num1))
-			swapNums();
+		checkNums();
 
 		fillNumGrid(num1, num2);
 
@@ -76,11 +70,7 @@ public class ColumnLevel extends Level {
 		num1 = Utils.randInt(1, 1000);
 		num2 = Utils.randInt(1, 1000);
 
-		// if:	 operation is subtraction and num2 > num1 or
-		//       operation is addition and num2 has more digits than num1
-		// then: switch num1 and num2
-		if (operation == SUBTRACTION && num2 > num1 || operation == ADDITION && Utils.getDigits(num2) > Utils.getDigits(num1))
-			swapNums();
+		checkNums();
 
 		fillNumGrid(num1, num2);
 
@@ -99,13 +89,7 @@ public class ColumnLevel extends Level {
 		this.num1 = num1;
 		this.num2 = num2;
 
-		// if:   operation is subtraction and num2 > num1
-		//       operation is addition and num2 has more digits than num1
-		// then: switch num1 and num2
-		if (operation == SUBTRACTION && this.num2 > this.num1
-				|| operation == ADDITION
-				&& Utils.getDigits(num2) > Utils.getDigits(num1))
-			swapNums();
+		checkNums();
 
 		fillNumGrid(num1, num2);
 
@@ -130,13 +114,7 @@ public class ColumnLevel extends Level {
 		num1 = Utils.randInt(num1min, num1max);
 		num2 = Utils.randInt(num2min, num2max);
 
-		// if:   operation is subtraction and num2 > num1
-		//       operation is addition and num2 has more digits than num1
-		// then: switch num1 and num2
-		if (operation == SUBTRACTION && this.num2 > this.num1
-				|| operation == ADDITION
-				&& Utils.getDigits(num2) > Utils.getDigits(num1))
-			swapNums();
+		checkNums();
 
 		fillNumGrid(num1, num2);
 
@@ -146,6 +124,17 @@ public class ColumnLevel extends Level {
 		hiddenDigits = new int[numVariables][3];
 	}
 
+	/**
+	 * Checks if num1 and num2 need to be swapped, and swaps them if necessary.
+	 * if:	 operation is subtraction and num2 > num1
+	 * or:	 operation is addition and num2 has more digits than num1
+	 * then: switch num1 and num2
+	 */
+	private void checkNums() {
+		if (operation == SUBTRACTION && num2 > num1 || operation == ADDITION && Utils.getDigits(num2) > Utils.getDigits(num1))
+			swapNums();
+	}
+	
 	/**
 	 * Switches num1 and num2.
 	 */
@@ -250,11 +239,8 @@ public class ColumnLevel extends Level {
 	 */
 	public void setOperation(char operation) {
 		this.operation = operation;
-		if (operation == SUBTRACTION && num2 > num1
-				|| operation == ADDITION 
-				// if num2 has more digits than num1
-				&& Utils.getDigits(num2) > Utils.getDigits(num1))
-			swapNums();
+		
+		checkNums(); // whether num1 and num2 need to be switched depends on operation
 	}
 
 	/**
@@ -312,7 +298,7 @@ public class ColumnLevel extends Level {
 			hiddenDigits[i][0] = randRowIndex;
 			hiddenDigits[i][1] = randColIndex;
 
-			//  store the correct value in hiddenDigits; this is the answer
+			//  store the correct value (answer) in hiddenDigits
 			hiddenDigits[i][2] = numGrid[randRowIndex][randColIndex].getValue();
 
 			// hide the Digit object in numGrid
@@ -320,6 +306,8 @@ public class ColumnLevel extends Level {
 		}
 
 		// ascending exchange sort, first by row and then by column; ignores answer
+		// effectively treats each tuple as a two-digit number
+		// the first digit is the row and the second digit is the column
 		// e.g. [2, 1, 9], [0, 1, 7], [0, 2, 8] sorts into [0, 1, 7], [0, 2, 8], [2, 1, 9]
 		int[] temp;
 		for (int i = 0; i < hiddenDigits.length - 1; i++) {
@@ -339,18 +327,23 @@ public class ColumnLevel extends Level {
 
 	/**
 	 * Attempts to fill an empty slot with a number.
+	 * 
 	 * @param index  the index of the empty slot to fill
 	 * @param number the number to input
+	 * 
 	 * @return whether the number is correct, as a boolean
 	 */
 	public boolean fill(int index, int number) {
+		// if:   the answer value stored in hiddenDigits at the given index is equal to the input
+		// then: make the Digit at the correct location in numGrid visible
+		//		 return true since the number was correct
 		if (hiddenDigits[index][2] == number) {
 			int numRow = hiddenDigits[index][0];
 			int numCol = hiddenDigits[index][1];
 			numGrid[numRow][numCol].setVisible(true);
 			return true;
-		} else
-			return false;
+		} else // if the input is not equal to the correct answer
+			return false; // return false since the number was not correct
 
 	}
 
@@ -359,7 +352,9 @@ public class ColumnLevel extends Level {
 	 * @return an int array of answers
 	 */
 	public int[] getAnswers() {
-		int[] answers =  new int[hiddenDigits.length];
+		int[] answers =  new int[hiddenDigits.length]; // create empty integer array
+		// for each answer stored in hiddenDigits:
+		// - set the next empty slot in the answers array equal to that answer
 		for (int i = 0; i < hiddenDigits.length; i++)
 			answers[i] = hiddenDigits[i][2];
 		return answers;
@@ -389,8 +384,10 @@ public class ColumnLevel extends Level {
 	 * @param index the index of the column
 	 * @return a Digit array containing each Digit in the specified column
 	 */
-	public Object[] getCol(int index) {
-		Digit[] column = new Digit[alignedNumGrid.length];
+	public Digit[] getCol(int index) {
+		Digit[] column = new Digit[alignedNumGrid.length]; // create empty integer array
+		// for each digit at the specified column index of alignedNumGrid:
+		// - set the next empty slot in the column array equal to that answer
 		for (int i = 0; i < alignedNumGrid.length; i++)
 			column[i] = alignedNumGrid[i][index];
 		return column;
