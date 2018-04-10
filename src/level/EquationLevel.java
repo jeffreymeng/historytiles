@@ -4,6 +4,7 @@
  * Purpose:
  */
 
+
 package level;
 
 public class EquationLevel extends Level {
