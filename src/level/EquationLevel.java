@@ -13,7 +13,7 @@ public class EquationLevel extends Level {
 	// - examples shown are when format modifier is used by itself unless otherwise marked
 	// - modifiers can be combined
 	// note that the variable x may be known and some other numbers may be unknown
-	final static String COEFFICIENT = "coefficient"; // ax = b
+	final static String COEFFICIENT = "coefficient"; // ax = b; ax + b = c in combination with CONSTANT_LEFT
 	final static String MULTIPLY_LEFT = "multiply-left"; // a * (x + b) = c; shown in combination with CONSTANT_LEFT
 	final static String CONSTANT_LEFT = "constant-left"; // x + a = b
 	final static String DIVIDE_VARIABLE = "divide-variable"; // x/a = b
@@ -23,6 +23,8 @@ public class EquationLevel extends Level {
 		String options = "";
 		for (int i = 0; i < formatModifiers.length; i++)
 			options += formatModifiers[i];
+		
+		
 	}
 }
 
