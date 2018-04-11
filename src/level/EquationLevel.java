@@ -16,14 +16,31 @@ public class EquationLevel extends Level {
 	final static String COEFFICIENT = "coefficient"; // ax = b; ax + b = c in combination with CONSTANT_LEFT
 	final static String MULTIPLY_LEFT = "multiply-left"; // a * (x + b) = c; shown in combination with CONSTANT_LEFT
 	final static String CONSTANT_LEFT = "constant-left"; // x + a = b
-	final static String DIVIDE_VARIABLE = "divide-variable"; // x/a = b
-	final static String DIVIDE_LEFT = "divide-left"; // (x + a)/b = c; shown in combination with CONSTANT_LEFT
+	//final static String DIVIDE_VARIABLE = "divide-variable"; // x/a = b
+	//final static String DIVIDE_LEFT = "divide-left"; // (x + a)/b = c; shown in combination with CONSTANT_LEFT
+	
+	private Object[] equation;
 	
 	public EquationLevel(String... formatModifiers) {
 		String options = "";
 		for (int i = 0; i < formatModifiers.length; i++)
 			options += formatModifiers[i];
 		
+		boolean coefficient = false, multiplyLeft = false, constantLeft = false;
+		
+		if (options.indexOf("coefficient") > -1)
+			coefficient = true;
+		if (options.indexOf("multiply-left") > -1)
+			multiplyLeft = true;
+		if (options.indexOf("constant-left") > -1)
+			constantLeft = true;
+		
+		// if options included COEFFICIENT
+		if (coefficient) {
+			
+			
+			
+		}
 		
 	}
 }
