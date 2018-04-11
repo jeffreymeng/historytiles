@@ -20,7 +20,8 @@ public class Button implements MouseListener {
 	private int x, y, width, height;
 	private JPanel panel;
 	private boolean pressed = false;
-	
+	private boolean pressedBeforeRepaint = false;
+	private boolean releasedBeforeRepaint = false;
 	public final static String TOP = "top";
 	public final static String BOTTOM = "bottom";
 	public final static String LEFT = "left";
@@ -128,43 +129,53 @@ public class Button implements MouseListener {
 		
 		//TODO: remove the +15px and get it to work
 		int labelY = (y + (height / 2)) - (labelHeight / 2) + 15;
-		System.out.println(y);
-		System.out.println(height);
-		System.out.println(labelHeight);
-		System.out.println(labelY);
+		//System.out.println(y);
+		//System.out.println(height);
+		//System.out.println(labelHeight);
+		//System.out.println(labelY);
 		label.draw(graphics, labelX, labelY);
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		System.out.println(e.getY());
+		//System.out.println(e.getY());
 		//check if the click was inside the button
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			// callback
-			//buttonInterface.buttonClicked(e);
+			buttonInterface.buttonClicked(e);
 		}
 
 	}
 
 	public void mousePressed(MouseEvent e) {
-		
+		if (pressedBeforeRepaint) {
+			pressedBeforeRepaint = false;
+			return;
+		}
 		//check if the press was inside the button
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			
-			//this.pressed = true;
+			this.pressed = true;
+			this.pressedBeforeRepaint = true;
 			
-			//buttonInterface.buttonPressed(e);
-			//panel.repaint();
+			buttonInterface.buttonPressed(e);
+			panel.repaint();
 		}
 
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		if (releasedBeforeRepaint) {
+			releasedBeforeRepaint = false;
+			return;
+		}
 		if (pressed) {
 			pressed = false;
-			//buttonInterface.buttonReleased(e);
-			//panel.repaint();
+			this.releasedBeforeRepaint = true;
+			
+			buttonInterface.buttonReleased(e);
+			panel.repaint();
 		}
 
 	}
