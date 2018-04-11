@@ -137,6 +137,10 @@ public class Button implements MouseListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		if (releasedBeforeRepaint) {
+			releasedBeforeRepaint = false;
+			return;	
+		}
 		//System.out.println(e.getY());
 		//check if the click was inside the button
 		if ((e.getX() > x && e.getX() < (x + width))
@@ -149,6 +153,7 @@ public class Button implements MouseListener {
 
 	public void mousePressed(MouseEvent e) {
 		if (pressedBeforeRepaint) {
+			//because when we repaint the class, if the button is still pressed, this event will get called twice.
 			pressedBeforeRepaint = false;
 			return;
 		}
@@ -166,10 +171,7 @@ public class Button implements MouseListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (releasedBeforeRepaint) {
-			releasedBeforeRepaint = false;
-			return;
-		}
+		
 		if (pressed) {
 			pressed = false;
 			this.releasedBeforeRepaint = true;
