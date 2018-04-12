@@ -25,4 +25,8 @@ public class Operator {
 	public void setOperation(char operation) {
 		this.operation = operation;
 	}
+	
+	public String toString() {
+		return Character.toString(operation);
+	}
 }
