@@ -216,7 +216,7 @@ public class ColumnLevel extends Level {
 			if (numGrid[i].length > maxNumLength)
 				maxNumLength = numGrid[i].length;
 
-		// fills alignedNumGrid
+		// fills alignedDigitGrid
 		alignedDigitGrid = new Digit[numGrid.length][maxNumLength];
 		// loops through each Digit in numGrid
 		// maxNumLength - numGrid[i].length is equal to amount of whitespace needed at beginning of line
@@ -252,8 +252,8 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
-	 * Returns the alignedNumGrid of this level.
-	 * @return a Digit matrix containing all objects in alignedNumGrid
+	 * Returns the alignedDigitGrid of this level.
+	 * @return a Digit matrix containing all objects in alignedDigitGrid
 	 */
 	public Digit[][] getAlignedDigitGrid() {
 		return alignedDigitGrid;
@@ -380,13 +380,13 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
-	 * Returns the Digits in a specified column of alignedNumGrid.
+	 * Returns the Digits in a specified column of alignedDigitGrid.
 	 * @param index the index of the column
 	 * @return a Digit array containing each Digit in the specified column
 	 */
 	public Digit[] getCol(int index) {
 		Digit[] column = new Digit[alignedDigitGrid.length]; // create empty integer array
-		// for each digit at the specified column index of alignedNumGrid:
+		// for each digit at the specified column index of alignedDigitGrid:
 		// - set the next empty slot in the column array equal to that answer
 		for (int i = 0; i < alignedDigitGrid.length; i++)
 			column[i] = alignedDigitGrid[i][index];
