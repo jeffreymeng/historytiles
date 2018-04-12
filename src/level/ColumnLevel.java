@@ -17,10 +17,10 @@ public class ColumnLevel extends Level {
 	private char operation; // should be one of the final static variables below
 	private int maxNumLength;
 
-	final static char ADDITION = '+';
-	final static char SUBTRACTION = '-';
-	final static char MULTIPLICATION = '*';
-	final static char DIVISION = '/';
+	public final static char ADDITION = '+';
+	public final static char SUBTRACTION = '-';
+	public final static char MULTIPLICATION = '*';
+	public final static char DIVISION = '/';
 
 	/**
 	 * Constructs a new ColumnLevel. The operation is addition by default.
