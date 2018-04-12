@@ -6,8 +6,8 @@
 package graphics;
 
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
+import level.*;
 
 public class ColumnLevelRenderEngine {
 	JPanel panel;
