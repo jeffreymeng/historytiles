@@ -24,6 +24,10 @@ public class Digit {
 	}
 	
 	public int getValue() {
+		System.out.println(((int) value) + "");
+		return (int) value;
+	}
+	public int getByteValue() {
 		return value;
 	}
 	public void setValue(int value) {

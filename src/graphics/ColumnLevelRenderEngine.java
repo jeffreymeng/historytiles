@@ -20,16 +20,24 @@ public class ColumnLevelRenderEngine {
 	public ColumnLevelRenderEngine(JPanel panel) {
 		this.panel = panel;
 		rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN, 20);
+		level = new ColumnLevel(ColumnLevel.ADDITION);
 	}
 
 	public void render(Graphics graphics) {
+
 		Digit[][] grid = level.getAlignedDigitGrid();
+		Digit digit;
 		String text = "";
 		Label label;
-		
-		for (int x = 0; x < grid.length; x ++) {
-			for (int y = 0; y < grid[x].length; y ++) {
-				text += grid[x][y] + "  ";
+
+		for (int x = 0; x < grid.length; x++) {
+			for (int y = 0; y < grid[x].length; y++) {
+				System.out.println( grid[x].length);
+				System.out.println(x);
+				System.out.println(y);
+				digit = grid[x][y];
+				System.out.println(digit.getValue());
+				//text += (String.valueOf(digit.getValue())) + "  ";
 			}
 			text += "\n";
 		}
