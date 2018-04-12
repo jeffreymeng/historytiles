@@ -25,7 +25,7 @@ public class ColumnLevelPanel extends JPanel {
 		JFrame f = new JFrame("Column Level Panel");
 		
 		//Digit[][] numGrid = level.getNumGrid();
-		Digit[][] alignedNumGrid = level.getAlignedNumGrid();
+		Digit[][] alignedNumGrid = level.getAlignedDigitGrid();
 		int maxNumLength = level.getMaxNumLength();
 
 		f.setLayout( new GridLayout( maxNumLength, alignedNumGrid.length ));
