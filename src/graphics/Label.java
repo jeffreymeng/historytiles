@@ -8,6 +8,8 @@ package graphics;
 
 import java.awt.*;
 
+import javax.swing.JPanel;
+
 public class Label {
 	private String text;
 	private Font font;
@@ -26,17 +28,30 @@ public class Label {
 		this.font = font;
 		this.text = text;
 		this.color = null;
-		
+
 	}
+
 	public Label(String text, Font font, Color color) {
 		this.font = font;
 		this.text = text;
 		this.color = color;
-		
+
 	}
+
 	public void draw(Graphics graphics, int width, int height, String options) {
 		draw(graphics, width, height, options, 0, 0);
 
+	}
+
+	public void draw(Graphics graphics, JPanel panel, String options) {
+		draw(graphics, panel.getHeight(), panel.getWidth(), options, 0, 0);
+
+	}
+
+	public void draw(Graphics graphics, JPanel panel, String options,
+			int xoffset, int yoffset) {
+		draw(graphics, panel.getWidth(), panel.getHeight(), options, xoffset,
+				yoffset);
 	}
 
 	public void draw(Graphics graphics, int width, int height, String options,
@@ -89,7 +104,6 @@ public class Label {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
 
 	public Font getFont() {
 		return font;
@@ -98,12 +112,15 @@ public class Label {
 	public void setFont(Font font) {
 		this.font = font;
 	}
+
 	public Color getColor() {
 		return color;
 	}
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
 	public void clearColor() {
 		this.color = null;
 	}
