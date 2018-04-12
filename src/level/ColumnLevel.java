@@ -9,11 +9,11 @@ package level;
 import util.Utils;
 
 public class ColumnLevel extends Level {
-	private Digit[][] numGrid = { {/* first number */}, {/* second number */}, {/* sum/difference/product/quotient */} };
+	private Digit[][] digitGrid = { {/* first number */}, {/* second number */}, {/* sum/difference/product/quotient */} };
 	private Digit[][] alignedDigitGrid; // same as numGrid except all numbers are right-aligned, with empty spaces set to null
 	private int numVariables;
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format {row, column, answer}
-	// stores answers and their locations in numGrid
+	// stores answers and their locations in digitGrid
 	private char operation; // should be one of the final static variables below
 	private int maxNumLength;
 
@@ -145,7 +145,7 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
-	 * Fills numGrid with the individual digits of each number.
+	 * Fills digitGrid with the individual digits of each number.
 	 * @param num1 the first number
 	 * @param num2 the second number
 	 */
@@ -155,16 +155,16 @@ public class ColumnLevel extends Level {
 		 * - find the value of that digit by converting num1 to a string and using
 		 *   the charAt and getNumericValue methods
 		 * - construct a new Digit using that value with visibility set to true
-		 * - store that Digit in the next empty space in the first row of numGrid
+		 * - store that Digit in the next empty space in the first row of digitGrid
 		 */
 		String num1String = String.valueOf(num1); // converts num1 to string
-		numGrid[0] = new Digit[num1String.length()]; // set the first row of the numGrid to the length of num1
+		digitGrid[0] = new Digit[num1String.length()]; // set the first row of the digitGrid to the length of num1
 
 		// converts each character in num1String into an integer
 		// constructs Digits using that integer value
-		// stores the Digits in numGrid
+		// stores the Digits in digitGrid
 		for (int i = 0; i < num1String.length(); i++)
-			numGrid[0][i] = new Digit(Character.getNumericValue(num1String
+			digitGrid[0][i] = new Digit(Character.getNumericValue(num1String
 					.charAt(i)), true);
 
 		/*
@@ -172,14 +172,14 @@ public class ColumnLevel extends Level {
 		 * - find the value of that digit by converting num2 to a string and using
 		 *   the charAt and getNumericValue methods
 		 * - construct a new Digit using that value with visibility set to true
-		 * - store that Digit in the next empty space in the second row of numGrid
+		 * - store that Digit in the next empty space in the second row of digitGrid
 		 * 
 		 * Process used is identical to that used for num1.
 		 */
 		String num2String = String.valueOf(num2);
-		numGrid[1] = new Digit[num2String.length()];
+		digitGrid[1] = new Digit[num2String.length()];
 		for (int i = 0; i < num2String.length(); i++)
-			numGrid[1][i] = new Digit(Character.getNumericValue(num2String
+			digitGrid[1][i] = new Digit(Character.getNumericValue(num2String
 					.charAt(i)), true);
 
 		String resultString; // the sum, difference, product, or quotient as a String
@@ -203,26 +203,26 @@ public class ColumnLevel extends Level {
 
 		// converts each character in resultString into an integer
 		// constructs Digits using that integer value
-		// stores the Digits in the third row of numGrid
-		numGrid[2] = new Digit[resultString.length()];
+		// stores the Digits in the third row of digitGrid
+		digitGrid[2] = new Digit[resultString.length()];
 		for (int i = 0; i < resultString.length(); i++)
-			numGrid[2][i] = new Digit( Character.getNumericValue( resultString.charAt(i) ), true );
+			digitGrid[2][i] = new Digit( Character.getNumericValue( resultString.charAt(i) ), true );
 
 
 
 		maxNumLength = 0; // the number of digits in the longest number
 		// loops through each number; set its length equal to maxNumLength if it is the longest yet checked
-		for (int i = 0; i < numGrid.length; i++)
-			if (numGrid[i].length > maxNumLength)
-				maxNumLength = numGrid[i].length;
+		for (int i = 0; i < digitGrid.length; i++)
+			if (digitGrid[i].length > maxNumLength)
+				maxNumLength = digitGrid[i].length;
 
-		// fills alignedNumGrid
-		alignedDigitGrid = new Digit[numGrid.length][maxNumLength];
-		// loops through each Digit in numGrid
-		// maxNumLength - numGrid[i].length is equal to amount of whitespace needed at beginning of line
-		for (int i = 0; i < numGrid.length; i++)
-			for (int j = 0; j < numGrid[i].length; j++)
-				alignedDigitGrid[i][j + (maxNumLength - numGrid[i].length)] = numGrid[i][j];
+		// fills alignedDigitGrid
+		alignedDigitGrid = new Digit[digitGrid.length][maxNumLength];
+		// loops through each Digit in digitGrid
+		// maxNumLength - digitGrid[i].length is equal to amount of whitespace needed at beginning of line
+		for (int i = 0; i < digitGrid.length; i++)
+			for (int j = 0; j < digitGrid[i].length; j++)
+				alignedDigitGrid[i][j + (maxNumLength - digitGrid[i].length)] = digitGrid[i][j];
 	}
 
 	/**
@@ -244,30 +244,30 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
-	 * Returns the numGrid of this level.
-	 * @return a Digit matrix containing all objects in numGrid
+	 * Returns the digitGrid of this level.
+	 * @return a Digit matrix containing all objects in digitGrid
 	 */
-	public Digit[][] getNumGrid() {
-		return numGrid;
+	public Digit[][] getDigitGrid() {
+		return digitGrid;
 	}
 
 	/**
-	 * Returns the alignedNumGrid of this level.
-	 * @return a Digit matrix containing all objects in alignedNumGrid
+	 * Returns the alignedDigitGrid of this level.
+	 * @return a Digit matrix containing all objects in alignedDigitGrid
 	 */
 	public Digit[][] getAlignedDigitGrid() {
 		return alignedDigitGrid;
 	}
 
 	/**
-	 * Returns the length of numGrid.
-	 * @return the number of objects in numGrid
+	 * Returns the length of digitGrid.
+	 * @return the number of objects in digitGrid
 	 */
 	public int getDigitGridLength() {
 		int sum = 0;
-		// for each row in numGrid
-		for (int i = 0; i < numGrid.length; i++)
-			sum += numGrid[i].length;
+		// for each row in digitGrid
+		for (int i = 0; i < digitGrid.length; i++)
+			sum += digitGrid[i].length;
 		return sum;
 	}
 	
@@ -291,18 +291,18 @@ public class ColumnLevel extends Level {
 		// loops n times where n equals numVariables
 		for (int i = 0; i < numVariables; i++) {
 			// generate random row and column
-			randRowIndex = Utils.randInt(0, numGrid.length);
-			randColIndex = Utils.randInt(0, numGrid[1].length);
+			randRowIndex = Utils.randInt(0, digitGrid.length);
+			randColIndex = Utils.randInt(0, digitGrid[1].length);
 
 			// store the random row and column in hiddenDigits
 			hiddenDigits[i][0] = randRowIndex;
 			hiddenDigits[i][1] = randColIndex;
 
 			//  store the correct value (answer) in hiddenDigits
-			hiddenDigits[i][2] = numGrid[randRowIndex][randColIndex].getValue();
+			hiddenDigits[i][2] = digitGrid[randRowIndex][randColIndex].getValue();
 
-			// hide the Digit object in numGrid
-			numGrid[randRowIndex][randColIndex].setVisible(false);
+			// hide the Digit object in digitGrid
+			digitGrid[randRowIndex][randColIndex].setVisible(false);
 		}
 
 		// ascending exchange sort, first by row and then by column; ignores answer
@@ -335,12 +335,12 @@ public class ColumnLevel extends Level {
 	 */
 	public boolean fill(int index, int number) {
 		// if:   the answer value stored in hiddenDigits at the given index is equal to the input
-		// then: make the Digit at the correct location in numGrid visible
+		// then: make the Digit at the correct location in digitGrid visible
 		//		 return true since the number was correct
 		if (hiddenDigits[index][2] == number) {
 			int numRow = hiddenDigits[index][0];
 			int numCol = hiddenDigits[index][1];
-			numGrid[numRow][numCol].setVisible(true);
+			digitGrid[numRow][numCol].setVisible(true);
 			return true;
 		} else // if the input is not equal to the correct answer
 			return false; // return false since the number was not correct
@@ -361,32 +361,32 @@ public class ColumnLevel extends Level {
 	}
 
 	/**
-	 * Returns the digit at the specified location on the numGrid.
+	 * Returns the digit at the specified location on the digitGrid.
 	 * @param row the row of the digit
 	 * @param col the column of the digit
 	 * @return the Digit object at the specified row and column
 	 */
 	public Digit getDigit(int row, int col) {
-		return numGrid[row][col];
+		return digitGrid[row][col];
 	}
 
 	/**
-	 * Returns the Digits in a specified row of numGrid.
+	 * Returns the Digits in a specified row of digitGrid.
 	 * @param index the index of the row
 	 * @return a Digit array containing each Digit in the specified row
 	 */
 	public Digit[] getRow(int index) {
-		return numGrid[index];
+		return digitGrid[index];
 	}
 
 	/**
-	 * Returns the Digits in a specified column of alignedNumGrid.
+	 * Returns the Digits in a specified column of alignedDigitGrid.
 	 * @param index the index of the column
 	 * @return a Digit array containing each Digit in the specified column
 	 */
 	public Digit[] getCol(int index) {
 		Digit[] column = new Digit[alignedDigitGrid.length]; // create empty integer array
-		// for each digit at the specified column index of alignedNumGrid:
+		// for each digit at the specified column index of alignedDigitGrid:
 		// - set the next empty slot in the column array equal to that answer
 		for (int i = 0; i < alignedDigitGrid.length; i++)
 			column[i] = alignedDigitGrid[i][index];
@@ -394,10 +394,10 @@ public class ColumnLevel extends Level {
 	}
 
 	// debug
-	public void printNumGrid() {
-		System.out.println("numGrid");
+	public void printDigitGrid() {
+		System.out.println("digitGrid");
 		String text = "";
-		for (Digit[] row : numGrid) {
+		for (Digit[] row : digitGrid) {
 
 			for (Digit col : row) {
 
@@ -412,7 +412,7 @@ public class ColumnLevel extends Level {
 	// debug
 	public static void main(String[] args) {
 		ColumnLevel cl = new ColumnLevel(ColumnLevel.ADDITION);
-		cl.printNumGrid();
+		cl.printDigitGrid();
 		cl.addVariables();
 		int[] answers = cl.getAnswers();
 		//Utils.printArray(answers);
