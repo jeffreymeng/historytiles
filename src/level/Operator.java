@@ -13,6 +13,9 @@ public class Operator {
 	final static char SUBTRACTION = '-';
 	final static char MULTIPLICATION = '*';
 	final static char DIVISION = '/';
+	final static char EQUALS = '=';
+	final static char OPEN_PARENTHESES = '(';
+	final static char CLOSE_PARENTHESES = ')';
 	
 	public Operator(char operation) {
 		this.operation = operation;

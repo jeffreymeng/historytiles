@@ -7,6 +7,8 @@
 
 package level;
 
+import util.Utils;
+
 public class EquationLevel extends Level {
 
 	// format modifiers
@@ -18,6 +20,8 @@ public class EquationLevel extends Level {
 	final static String CONSTANT_LEFT = "constant-left"; // x + a = b
 	//final static String DIVIDE_VARIABLE = "divide-variable"; // x/a = b
 	//final static String DIVIDE_LEFT = "divide-left"; // (x + a)/b = c; shown in combination with CONSTANT_LEFT
+	
+	private int numVariables;
 
 	private Object[] equation;
 
@@ -35,11 +39,44 @@ public class EquationLevel extends Level {
 		if (options.indexOf("constant-left") > -1)
 			constantLeft = true;
 
-		// if options included COEFFICIENT
-		if (coefficient && !multiplyLeft && !constantLeft) {
+		// if options included COEFFICIENT or MULTIPLY_LEFT only (equivalent)
+		if (coefficient && !multiplyLeft && !constantLeft || !coefficient && multiplyLeft && !constantLeft) {
 			
-			//equation = {new Number()};
+			//
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.MULTIPLICATION);
+			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Operator(Operator.EQUALS);
+			equation[4] = new Digit(((Digit)equation[0]).getValue() * ((Digit)equation[2]).getValue());
 
+		} else if (coefficient && multiplyLeft && !constantLeft) {
+			
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.MULTIPLICATION);
+			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
+			equation[3] = new Digit(Utils.randInt(0, 10));
+			equation[4] = new Operator(Operator.MULTIPLICATION);
+			equation[5] = new Digit(Utils.randInt(0, 10));
+			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
+			equation[7] = new Digit(((Digit)equation[0]).getValue() * ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue());
+			
+		} else if (coefficient && multiplyLeft && constantLeft) {
+			
+			// n * (n * n + n) = n
+			
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.MULTIPLICATION);
+			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
+			equation[3] = new Digit(Utils.randInt(0, 10));
+			equation[4] = new Operator(Operator.MULTIPLICATION);
+			equation[5] = new Digit(Utils.randInt(0, 10));
+			equation[6] = new Operator(Operator.ADDITION);
+			equation[7] = new Digit(Utils.randInt(0, 10));
+			equation[8] = new Operator(Operator.OPEN_PARENTHESES);
+			equation[9] = new Operator(Operator.EQUALS);
+			equation[10] = new Digit( ((Digit)equation[0]).getValue() *
+					( ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() + ((Digit)equation[7]).getValue()) );
+			
 		}
 
 	}
