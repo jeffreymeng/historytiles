@@ -6,9 +6,7 @@
 package graphics;
 
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
-
 import level.*;
 
 public class ColumnLevelRenderEngine {
@@ -29,15 +27,18 @@ public class ColumnLevelRenderEngine {
 		Digit digit;
 		String text = "";
 		Label label;
-
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[x].length; y++) {
-				System.out.println( grid[x].length);
+				System.out.println(grid[x].length);
 				System.out.println(x);
 				System.out.println(y);
 				digit = grid[x][y];
-				System.out.println(digit.getValue());
-				//text += (String.valueOf(digit.getValue())) + "  ";
+				if (digit.isSpace()) {
+					text += " " + "  ";//space in two strings for clarity
+					continue;
+				}
+				
+				text += (String.valueOf(digit.getValue())) + "  ";
 			}
 			text += "\n";
 		}

@@ -9,9 +9,10 @@ package level;
 import util.Utils;
 
 public class ColumnLevel extends Level {
-	private Digit[][] digitGrid = { {/* first number */}, {/* second number */}, {/* sum/difference/product/quotient */} };
-	private Digit[][] alignedDigitGrid; // same as numGrid except all numbers are right-aligned, with empty spaces set to null
-	private int numVariables;
+	private Digit[][] digitGrid = new Digit[1][3];//{ {/* first number */}, {/* second number */}, {/* sum/difference/product/quotient */} }
+	private Digit[][] alignedDigitGrid; // same as numGrid except all numbers are right-aligned, empty spaces are space digits
+	private int numVariables; 
+	//TODO: set null allignedDigitGrid elements to space digits
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format {row, column, answer}
 	// stores answers and their locations in digitGrid
 	private char operation; // should be one of the final static variables below

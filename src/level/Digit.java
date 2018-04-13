@@ -3,14 +3,27 @@ package level;
 public class Digit {
 	private byte value;
 	private boolean visible;
+	private boolean isSpace;
 	
 	public Digit(int value) {
 		this.value = (byte) value;
 		this.visible = true;
+		this.isSpace = false;
 	}
 	
 	public Digit(int value, boolean visible) {
 		this.value = (byte) value;
+		this.visible = visible;
+		this.isSpace = false;
+	}
+	public Digit(int value, boolean visible, boolean isSpace) {
+		this.value = (byte) value;
+		this.visible = visible;
+		this.isSpace = false;
+	}
+	public Digit(boolean visible, boolean isSpace) {
+		
+		this.isSpace = true;
 		this.visible = visible;
 	}
 	public Digit(byte value) {
@@ -24,7 +37,7 @@ public class Digit {
 	}
 	
 	public int getValue() {
-		System.out.println(((int) value) + "");
+		
 		return (int) value;
 	}
 	public int getByteValue() {
@@ -41,5 +54,13 @@ public class Digit {
 	}
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public boolean isSpace() {
+		return isSpace;
+	}
+
+	public void setSpace(boolean isSpace) {
+		this.isSpace = isSpace;
 	}
 }
