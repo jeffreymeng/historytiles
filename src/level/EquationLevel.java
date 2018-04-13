@@ -77,6 +77,14 @@ public class EquationLevel extends Level {
 			equation[10] = new Digit( ((Digit)equation[0]).getValue() *
 					( ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() + ((Digit)equation[7]).getValue()) );
 			
+		} else if (!coefficient && !multiplyLeft && constantLeft) {
+			
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.ADDITION);
+			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Operator(Operator.EQUALS);
+			equation[4] = new Digit(((Digit)equation[0]).getValue() + ((Digit)equation[2]).getValue());
+			
 		}
 
 	}
