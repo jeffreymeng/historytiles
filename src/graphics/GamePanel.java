@@ -39,7 +39,7 @@ public class GamePanel extends JPanel /*implements ButtonListener*/ {
 				50);
 
 		title = new Label("Game", rubik);
-		//colLevelRenderEngine = new ColumnLevelRenderEngine(this);
+		colLevelRenderEngine = new ColumnLevelRenderEngine(this);
 		
 		//System.out.println(title.getFont().getSize());
 		//rubik.setSize(15);
@@ -57,7 +57,7 @@ public class GamePanel extends JPanel /*implements ButtonListener*/ {
 		//System.out.println(title.getFont().getSize());
 		title.draw(graphics, width, height, Label.CENTER, 0, -50);
 		
-		//colLevelRenderEngine.render(graphics);
+		colLevelRenderEngine.render(graphics);
 		//playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
 
 	}
