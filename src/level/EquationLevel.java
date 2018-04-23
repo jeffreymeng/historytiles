@@ -16,13 +16,12 @@ public class EquationLevel extends Level {
 	// - modifiers can be combined
 	// note that the variable x may be known and some other numbers may be unknown
 	final static String COEFFICIENT = "coefficient"; // ax = b; ax + b = c in combination with CONSTANT_LEFT
-	final static String MULTIPLY_LEFT = "multiply-left"; // a * (x + b) = c; shown in combination with CONSTANT_LEFT
+	final static String MULTIPLY_LEFT = "multiply-left"; // ax = b; a * (x + b) = c in combination with CONSTANT_LEFT
 	final static String CONSTANT_LEFT = "constant-left"; // x + a = b
 	//final static String DIVIDE_VARIABLE = "divide-variable"; // x/a = b
 	//final static String DIVIDE_LEFT = "divide-left"; // (x + a)/b = c; shown in combination with CONSTANT_LEFT
-	
-	private int numVariables;
 
+	private int numVariables;
 	private Object[] equation;
 
 	public EquationLevel(String... formatModifiers) {
@@ -30,7 +29,7 @@ public class EquationLevel extends Level {
 		for (int i = 0; i < formatModifiers.length; i++)
 			options += formatModifiers[i];
 
-		boolean coefficient = false, multiplyLeft = false, constantLeft = false;
+		boolean coefficient = false, multiplyLeft = false, constantLeft = false; // booleans show whether each option was selected
 
 		if (options.indexOf("coefficient") > -1)
 			coefficient = true;
@@ -39,18 +38,36 @@ public class EquationLevel extends Level {
 		if (options.indexOf("constant-left") > -1)
 			constantLeft = true;
 
-		// if options included COEFFICIENT or MULTIPLY_LEFT only (equivalent)
+		// One option selected
+		
 		if (coefficient && !multiplyLeft && !constantLeft || !coefficient && multiplyLeft && !constantLeft) {
-			
-			//
+
+			// a * b = c 
+
 			equation[0] = new Digit(Utils.randInt(0, 10));
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Digit(Utils.randInt(0, 10));
 			equation[3] = new Operator(Operator.EQUALS);
 			equation[4] = new Digit(((Digit)equation[0]).getValue() * ((Digit)equation[2]).getValue());
 
-		} else if (coefficient && multiplyLeft && !constantLeft) {
+		} else if (!coefficient && !multiplyLeft && constantLeft) {
+
+			// a + b = c
 			
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.ADDITION);
+			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Operator(Operator.EQUALS);
+			equation[4] = new Digit(((Digit)equation[0]).getValue() + ((Digit)equation[2]).getValue());
+
+		}
+		
+		// Two options selected
+		
+		else if (coefficient && multiplyLeft && !constantLeft) {
+
+			// a * (b * c) = d
+
 			equation[0] = new Digit(Utils.randInt(0, 10));
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
@@ -58,12 +75,44 @@ public class EquationLevel extends Level {
 			equation[4] = new Operator(Operator.MULTIPLICATION);
 			equation[5] = new Digit(Utils.randInt(0, 10));
 			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
-			equation[7] = new Digit(((Digit)equation[0]).getValue() * ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue());
+			equation[7] = new Operator(Operator.EQUALS);
+			equation[8] = new Digit( ((Digit)equation[0]).getValue() * ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() );
+
+		} else if (coefficient && !multiplyLeft && constantLeft) {
 			
-		} else if (coefficient && multiplyLeft && constantLeft) {
+			// a * b + c = d
 			
-			// n * (n * n + n) = n
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.MULTIPLICATION);
+			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Operator(Operator.ADDITION);
+			equation[4] = new Digit(Utils.randInt(0, 10));
+			equation[5] = new Operator(Operator.EQUALS);
+			equation[6] = new Digit( getDigitValue(0) * getDigitValue(2) * getDigitValue(4) );
+					//((Digit)equation[0]).getValue() * ((Digit)equation[2]).getValue() + ((Digit)equation[4]).getValue() );
 			
+		} else if (!coefficient && multiplyLeft && constantLeft) {
+			
+			// a * (b + c) = d
+			
+			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[1] = new Operator(Operator.MULTIPLICATION);
+			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
+			equation[3] = new Digit(Utils.randInt(0, 10));
+			equation[4] = new Operator(Operator.ADDITION);
+			equation[5] = new Digit(Utils.randInt(0, 10));
+			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
+			equation[7] = new Operator(Operator.EQUALS);
+			equation[8] = new Digit( getDigitValue(0) * (getDigitValue(3) + getDigitValue(5)) );
+			
+		}
+		
+		// Three options selected
+		
+		else if (coefficient && multiplyLeft && constantLeft) {
+
+			// a * (b * c + d) = e
+
 			equation[0] = new Digit(Utils.randInt(0, 10));
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
@@ -74,43 +123,39 @@ public class EquationLevel extends Level {
 			equation[7] = new Digit(Utils.randInt(0, 10));
 			equation[8] = new Operator(Operator.OPEN_PARENTHESES);
 			equation[9] = new Operator(Operator.EQUALS);
-			equation[10] = new Digit( ((Digit)equation[0]).getValue() *
-					( ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() + ((Digit)equation[7]).getValue()) );
-			
-		} else if (!coefficient && !multiplyLeft && constantLeft) {
-			
-			equation[0] = new Digit(Utils.randInt(0, 10));
-			equation[1] = new Operator(Operator.ADDITION);
-			equation[2] = new Digit(Utils.randInt(0, 10));
-			equation[3] = new Operator(Operator.EQUALS);
-			equation[4] = new Digit(((Digit)equation[0]).getValue() + ((Digit)equation[2]).getValue());
-			
+			equation[10] = new Digit( getDigitValue(0) * ( getDigitValue(3) * getDigitValue(5) + getDigitValue(7) ) );
+					//((Digit)equation[0]).getValue() *
+					//( ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() + ((Digit)equation[7]).getValue()) );
+
 		}
+		
+		addVariables();
 
 	}
-
 
 	/*
 	 * Format:
 	 *  n	one-digit number
 	 *  nn	two-digit number
+	 *  nnn	three-digit number
 	 *  +	addition
 	 *  -	subtraction
 	 *  *	multiplication
 	 *  /	division
+	 *  =	equality
 	 *  
 	 * Operators are not implied.
 	 * Spaces are ignored.
 	 */
 	public EquationLevel(String format) {
 
-		format.trim(); // remove spaces at beginning and end (e.g. "  sample string    " becomes "sample string")
+		format.trim(); // remove spaces at beginning and end ("  sample string    " becomes "sample string")
 
 		for (int i = 0; i < format.length(); i++) // for each character in format
 			if (format.charAt(i) == ' ') // if the character is a space
 				format = format.substring(0, i) + format.substring(i + 1); // delete the character
 
-		for (int i = 0; i < format.length(); i++) {
+		for (int i = 0; i < format.length(); i++) { // for each character in format
 			switch (format.charAt(i)) {
 			case 'n':
 				int numDigits = 1;
@@ -118,7 +163,8 @@ public class EquationLevel extends Level {
 				while (numberContinues) {
 					if (format.charAt(i + numDigits) == 'n') { // if next character to be checked is another digit of the current number
 						numDigits++;
-						numberContinues = true; // character after next character may still be another digit
+						i++; // skip characters already checked in next loop
+						numberContinues = true; // character after  character just checked may be another digit
 					} else
 						numberContinues = false; // if next character is not 'n', then it is not part of this number
 				}
@@ -136,46 +182,29 @@ public class EquationLevel extends Level {
 			case '/':
 				equation[i] = new Operator(Operator.DIVISION);
 				break;
+			case '=':
+				equation[i] = new Operator(Operator.EQUALS);
+				break;
 			}
 		}
+		
+		addVariables();
 
+	}
+	
+	private void addVariables() {
+		for (int i = 0; i < numVariables; i++) {
+			int randIndex = Utils.randInt(0, equation.length - 1)
+			if (equation[randIndex] instanceof Digit)
+				equation[randIndex].setVisible(false);
+		}
+	}
+	
+	public int getDigitValue(int index) {
+		if (equation[index] instanceof Digit)
+			return ((Digit)equation[index]).getValue();
+		else
+			return -1;
 	}
 
 }
-
-/*
-package level;
-
-public class EquationLevel extends Level {
-	private String format;
-	/*
- * Format:
- *  x		one-digit blank
- *  x{y}	y-digit blank
- *  x(z)	one-digit blank with answer equal to z
- *  x{y}(z)	y-digit blank with answer equal to z
- *  n		number
- *  +		addition
- *  -		subtraction
- *  *		multiplication
- *  /		division
- *  
- *  Operators are not implied (e.g. "xn" refers to a single two-digit number with a blank tens digit, not "x * n").
- *  Spaces are ignored.
-
-
-	private Object[] equation;
-
-	public EquationLevel(String format) {
-		this.format = format;
-		/*
-		for (int i = 0; i < this.format.length(); i++) {
-			switch (this.format.charAt(i)) {
-			case 'x':
-				equation[i] = new Digit
-			}
-		}
-
-	}
-}
- */
