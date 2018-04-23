@@ -11,7 +11,6 @@ import level.*;
 
 public class ColumnLevelRenderEngine {
 	JPanel panel;
-
 	ColumnLevel level;
 	Font rubik;
 
