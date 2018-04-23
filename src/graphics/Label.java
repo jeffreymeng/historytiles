@@ -98,6 +98,7 @@ public class Label {
 		if (color != null) {
 			graphics.setColor(color);
 		}
+		System.out.println(text);
 		String[] textComponents = text.split("\n");
 		int lines = textComponents.length;
 	
@@ -110,6 +111,8 @@ public class Label {
 		
 		for (int i = 0; i < textComponents.length; i ++) {
 			graphics.drawString(text, x, (y + (i * (padding * textHeight))));
+			System.out.println(i);
+			System.out.println(padding * textHeight);
 		}
 	}
 

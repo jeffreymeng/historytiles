@@ -33,7 +33,8 @@ public class ColumnLevelRenderEngine {
 				System.out.println(y);
 				digit = grid[x][y];
 				if (digit.isSpace()) {
-					text += " " + "  ";//space in two strings for clarity
+					text += " " + "  ";//space in two strings for clarity, first space is the space we add, 
+					//the second is the space automatically added to all digits or spaces
 					continue;
 				}
 				
