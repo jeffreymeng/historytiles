@@ -22,10 +22,15 @@ public class Number {
 
 		// each other digit is random number from 0 (inclusive) to 10 (exclusive)
 		for (int i = 1; i < digits.length; i++)
-			digits[i] = Utils.randInt(0, 10);
+			digits[i] = new Digit(Utils.randInt(0, 10));
 	}
 
 	public Number(int... digits) {
+		for (int i = 0; i < digits.length; i++)
+			this.digits[i] = new Digit(digits[i]);
+	}
+	
+	public Number(Digit... digits) {
 		this.digits = digits;
 	}
 
