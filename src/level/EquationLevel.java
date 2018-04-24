@@ -38,6 +38,9 @@ public class EquationLevel extends Level {
 		if (options.indexOf("constant-left") > -1)
 			constantLeft = true;
 
+		int result; // right side of equation
+		int resultIndex; // index of result in equation
+		
 		// One option selected
 		
 		if (coefficient && !multiplyLeft && !constantLeft || !coefficient && multiplyLeft && !constantLeft) {
@@ -48,7 +51,11 @@ public class EquationLevel extends Level {
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Digit(Utils.randInt(0, 10));
 			equation[3] = new Operator(Operator.EQUALS);
-			equation[4] = new Digit(((Digit)equation[0]).getValue() * ((Digit)equation[2]).getValue());
+			result = getDigitValue(0) * getDigitValue(2);
+			if (Utils.getDigits(result) > 1)
+				equation[4] = new Number(result);
+			else
+				equation[4] = new Digit(result);
 
 		} else if (!coefficient && !multiplyLeft && constantLeft) {
 

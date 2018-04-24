@@ -45,6 +45,8 @@ public class ColumnLevel extends Level {
 
 		// number of 3-tuples matches number of variables
 		hiddenDigits = new int[numVariables][3];
+		
+		addVariables();
 	}
 
 	/**
@@ -66,6 +68,8 @@ public class ColumnLevel extends Level {
 
 		// number of 3-tuples matches number of variables
 		hiddenDigits = new int[numVariables][3];
+		
+		addVariables();
 	}
 
 	/**
@@ -89,6 +93,8 @@ public class ColumnLevel extends Level {
 
 		// number of 3-tuples matches number of variables
 		hiddenDigits = new int[this.numVariables][3];
+		
+		addVariables();
 	}
 
 	/**
@@ -114,6 +120,8 @@ public class ColumnLevel extends Level {
 
 		// number of 3-tuples matches number of variables
 		hiddenDigits = new int[numVariables][3];
+		
+		addVariables();
 	}
 
 	/**
@@ -144,6 +152,8 @@ public class ColumnLevel extends Level {
 
 		// number of 3-tuples matches number of variables
 		hiddenDigits = new int[numVariables][3];
+		
+		addVariables();
 	}
 
 	/**
