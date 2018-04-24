@@ -24,7 +24,17 @@ public class EquationLevel extends Level {
 	private int numVariables;
 	private Object[] equation;
 
-	public EquationLevel(String... formatModifiers) {
+	public EquationLevel(int numVariables, String... formatModifiers) {
+		
+		int[] randIntArray = {Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10)}
+		
+		EquationLevel(numVariables, randIntArray, formatModifiers);
+
+	}
+
+	public EquationLevel(int numVariables, int[] numbers, String... formatModifiers) {
+		this.numVariables = numVariables;
+
 		String options = "";
 		for (int i = 0; i < formatModifiers.length; i++)
 			options += formatModifiers[i];
@@ -38,170 +48,112 @@ public class EquationLevel extends Level {
 		if (options.indexOf("constant-left") > -1)
 			constantLeft = true;
 
-		int result; // right side of equation
-		int resultIndex; // index of result in equation
-		
+		int result = 0; // right side of equation
+		int resultIndex = 0; // index of result in equation
+
 		// One option selected
-		
+
 		if (coefficient && !multiplyLeft && !constantLeft || !coefficient && multiplyLeft && !constantLeft) {
 
 			// a * b = c 
 
-			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[0] = new Digit(numbers[0]);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
-			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[2] = new Digit(numbers[1]);
 			equation[3] = new Operator(Operator.EQUALS);
 			result = getDigitValue(0) * getDigitValue(2);
-			if (Utils.getDigits(result) > 1)
-				equation[4] = new Number(result);
-			else
-				equation[4] = new Digit(result);
+
 
 		} else if (!coefficient && !multiplyLeft && constantLeft) {
 
 			// a + b = c
-			
-			equation[0] = new Digit(Utils.randInt(0, 10));
+
+			equation[0] = new Digit(numbers[0]);
 			equation[1] = new Operator(Operator.ADDITION);
-			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[2] = new Digit(numbers[1]);
 			equation[3] = new Operator(Operator.EQUALS);
-			equation[4] = new Digit(((Digit)equation[0]).getValue() + ((Digit)equation[2]).getValue());
+			result = getDigitValue(0) + getDigitValue(2);
+			//equation[4] = new Digit(((Digit)equation[0]).getValue() + ((Digit)equation[2]).getValue());
 
 		}
-		
+
 		// Two options selected
-		
+
 		else if (coefficient && multiplyLeft && !constantLeft) {
 
 			// a * (b * c) = d
 
-			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[0] = new Digit(numbers[0]);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
-			equation[3] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Digit(numbers[1]);
 			equation[4] = new Operator(Operator.MULTIPLICATION);
-			equation[5] = new Digit(Utils.randInt(0, 10));
+			equation[5] = new Digit(numbers[2]);
 			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
 			equation[7] = new Operator(Operator.EQUALS);
-			equation[8] = new Digit( ((Digit)equation[0]).getValue() * ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() );
+			result = getDigitValue(0) * getDigitValue(3) * getDigitValue(5);
+			resultIndex = 8;
+			//equation[8] = new Digit( ((Digit)equation[0]).getValue() * ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() );
 
 		} else if (coefficient && !multiplyLeft && constantLeft) {
-			
+
 			// a * b + c = d
-			
-			equation[0] = new Digit(Utils.randInt(0, 10));
+
+			equation[0] = new Digit(numbers[0]);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
-			equation[2] = new Digit(Utils.randInt(0, 10));
+			equation[2] = new Digit(numbers[1]);
 			equation[3] = new Operator(Operator.ADDITION);
-			equation[4] = new Digit(Utils.randInt(0, 10));
+			equation[4] = new Digit(numbers[2]);
 			equation[5] = new Operator(Operator.EQUALS);
-			equation[6] = new Digit( getDigitValue(0) * getDigitValue(2) * getDigitValue(4) );
-					//((Digit)equation[0]).getValue() * ((Digit)equation[2]).getValue() + ((Digit)equation[4]).getValue() );
-			
+			result = getDigitValue(0) * getDigitValue(2) * getDigitValue(4);
+			resultIndex = 6;
+
 		} else if (!coefficient && multiplyLeft && constantLeft) {
-			
+
 			// a * (b + c) = d
-			
-			equation[0] = new Digit(Utils.randInt(0, 10));
+
+			equation[0] = new Digit(numbers[0]);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
-			equation[3] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Digit(numbers[1]);
 			equation[4] = new Operator(Operator.ADDITION);
-			equation[5] = new Digit(Utils.randInt(0, 10));
+			equation[5] = new Digit(numbers[2]);
 			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
 			equation[7] = new Operator(Operator.EQUALS);
-			equation[8] = new Digit( getDigitValue(0) * (getDigitValue(3) + getDigitValue(5)) );
-			
+			result = getDigitValue(0) * (getDigitValue(3) + getDigitValue(5));
+			resultIndex = 8;
+
 		}
-		
+
 		// Three options selected
-		
+
 		else if (coefficient && multiplyLeft && constantLeft) {
 
 			// a * (b * c + d) = e
 
-			equation[0] = new Digit(Utils.randInt(0, 10));
+			equation[0] = new Digit(numbers[0]);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
-			equation[3] = new Digit(Utils.randInt(0, 10));
+			equation[3] = new Digit(numbers[1]);
 			equation[4] = new Operator(Operator.MULTIPLICATION);
-			equation[5] = new Digit(Utils.randInt(0, 10));
+			equation[5] = new Digit(numbers[2]);
 			equation[6] = new Operator(Operator.ADDITION);
-			equation[7] = new Digit(Utils.randInt(0, 10));
+			equation[7] = new Digit(numbers[3]);
 			equation[8] = new Operator(Operator.OPEN_PARENTHESES);
 			equation[9] = new Operator(Operator.EQUALS);
-			equation[10] = new Digit( getDigitValue(0) * ( getDigitValue(3) * getDigitValue(5) + getDigitValue(7) ) );
-					//((Digit)equation[0]).getValue() *
-					//( ((Digit)equation[3]).getValue() * ((Digit)equation[5]).getValue() + ((Digit)equation[7]).getValue()) );
+			result = getDigitValue(0) * ( getDigitValue(3) * getDigitValue(5) + getDigitValue(7) );
+			resultIndex = 10;
 
 		}
-		
-		addVariables();
 
+		if (Utils.getDigits(result) > 1)
+			equation[resultIndex] = new Number(result);
+		else
+			equation[resultIndex] = new Digit(result);
+
+		addVariables();		
 	}
 
-	/*
-	 * Format:
-	 *  n	one-digit number
-	 *  nn	two-digit number
-	 *  nnn	three-digit number
-	 *  +	addition
-	 *  -	subtraction
-	 *  *	multiplication
-	 *  /	division
-	 *  =	equality
-	 *  
-	 * Operators are not implied.
-	 * Spaces are ignored.
-	 */
-	/*public EquationLevel(String format) {
-
-		format.trim(); // remove spaces at beginning and end ("  sample string    " becomes "sample string")
-
-		for (int i = 0; i < format.length(); i++) // for each character in format
-			if (format.charAt(i) == ' ') // if the character is a space
-				format = format.substring(0, i) + format.substring(i + 1); // delete the character
-		// "sample string" becomes "samplestring"
-
-		for (int i = 0; i < format.length(); i++) { // for each character in format
-			switch (format.charAt(i)) {
-			case 'n':
-				int numDigits = 1;
-				boolean numberContinues = true; // true if next character is possibly another digit of the current number
-				while (numberContinues) {
-					if (format.charAt(i + numDigits) == 'n') { // if next character to be checked is another digit of the current number
-						numDigits++;
-						i++; // skip characters already checked in next loop
-						numberContinues = true; // character after  character just checked may be another digit
-					} else
-						numberContinues = false; // if next character is not 'n', then it is not part of this number
-				}
-				equation[i] = new Number(numDigits);
-				break;
-			case '+':
-				equation[i] = new Operator(Operator.ADDITION);
-				break;
-			case '-':
-				equation[i] = new Operator(Operator.SUBTRACTION);
-				break;
-			case '*':
-				equation[i] = new Operator(Operator.MULTIPLICATION);
-				break;
-			case '/':
-				equation[i] = new Operator(Operator.DIVISION);
-				break;
-			case '=':
-				equation[i] = new Operator(Operator.EQUALS);
-				break;
-			}
-		}
-		
-		// fill numbers here
-		
-		addVariables();
-
-	} */
-	
 	private void addVariables() {
 		for (int i = 0; i < numVariables; i++) {
 			int randIndex = Utils.randInt(0, equation.length - 1);
@@ -213,7 +165,7 @@ public class EquationLevel extends Level {
 				i--; // do not increment counter if randIndex did not select a Digit or Number
 		}
 	}
-	
+
 	public int getDigitValue(int index) {
 		if (equation[index] instanceof Digit)
 			return ((Digit)equation[index]).getValue();
