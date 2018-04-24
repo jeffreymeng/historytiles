@@ -147,13 +147,14 @@ public class EquationLevel extends Level {
 	 * Operators are not implied.
 	 * Spaces are ignored.
 	 */
-	public EquationLevel(String format) {
+	/*public EquationLevel(String format) {
 
 		format.trim(); // remove spaces at beginning and end ("  sample string    " becomes "sample string")
 
 		for (int i = 0; i < format.length(); i++) // for each character in format
 			if (format.charAt(i) == ' ') // if the character is a space
 				format = format.substring(0, i) + format.substring(i + 1); // delete the character
+		// "sample string" becomes "samplestring"
 
 		for (int i = 0; i < format.length(); i++) { // for each character in format
 			switch (format.charAt(i)) {
@@ -188,15 +189,21 @@ public class EquationLevel extends Level {
 			}
 		}
 		
+		// fill numbers here
+		
 		addVariables();
 
-	}
+	} */
 	
 	private void addVariables() {
 		for (int i = 0; i < numVariables; i++) {
-			int randIndex = Utils.randInt(0, equation.length - 1)
+			int randIndex = Utils.randInt(0, equation.length - 1);
 			if (equation[randIndex] instanceof Digit)
-				equation[randIndex].setVisible(false);
+				((Digit)equation[randIndex]).setVisible(false);
+			else if (equation[randIndex] instanceof Number)
+				((Number)equation[randIndex]).setVisible(false);
+			else
+				i--; // do not increment counter if randIndex did not select a Digit or Number
 		}
 	}
 	
