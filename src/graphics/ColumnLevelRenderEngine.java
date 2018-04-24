@@ -28,13 +28,15 @@ public class ColumnLevelRenderEngine {
 		Label label;
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[x].length; y++) {
-				System.out.println(grid[x].length);
-				System.out.println(x);
-				System.out.println(y);
+				
 				digit = grid[x][y];
+				
 				if (digit.isSpace()) {
 					text += " " + "  ";//space in two strings for clarity, first space is the space we add, 
 					//the second is the space automatically added to all digits or spaces
+					continue;
+				} else if (!digit.isVisible()) {
+					text += "?" + "  ";
 					continue;
 				}
 				

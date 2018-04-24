@@ -91,28 +91,29 @@ public class Label {
 	}
 
 	public void draw(Graphics graphics, int x, int y) {
-		draw(graphics, x, y, true);
+
+		draw(graphics, x, y, (text.split("\n").length > 1) ? 10 : 0);
 	}
 
-	public void draw(Graphics graphics, int x, int y, boolean autoOffset) {
+	public void draw(Graphics graphics, int x, int y, int padding) {
+		
 		if (color != null) {
 			graphics.setColor(color);
 		}
-		System.out.println(text);
+
 		String[] textComponents = text.split("\n");
 		int lines = textComponents.length;
-	
-		int padding = 10;//padding on top
+
+		
 		int textWidth = graphics.getFontMetrics().stringWidth(text);
 		int textHeight = graphics.getFontMetrics().getHeight();
-		
+
 		y = y - (((lines * textHeight) + (padding * lines)) / 2);
-		
-		
-		for (int i = 0; i < textComponents.length; i ++) {
-			graphics.drawString(text, x, (y + (i * (padding * textHeight))));
-			System.out.println(i);
-			System.out.println(padding * textHeight);
+
+		for (int i = 0; i < textComponents.length; i++) {
+			graphics.drawString(textComponents[i], x,
+					(y + (i * (padding + textHeight))));
+
 		}
 	}
 

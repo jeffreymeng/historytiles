@@ -27,8 +27,7 @@ public class MysteryNumbersGame {
 		
 		TitlePanel titlePanel = new TitlePanel(frame, this);
 		GamePanel gamePanel = new GamePanel(frame, this);
-		JLabel label = new JLabel("game");
-		gamePanel.add(label, JLabel.CENTER);
+		
 		
 		panel = new JPanel();
 		panel.setLayout(new CardLayout());

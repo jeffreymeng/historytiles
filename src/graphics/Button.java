@@ -69,9 +69,9 @@ public class Button implements MouseListener {
 
 		int padding = 25; // px
 
-		// to center something horizontally, we take half of the width, then we
-		// subtract half of the width. That way, when we draw it, the center of
-		// the text will be exactly on the center of the panel.
+		// to center something horizontally, we take half of the panel width, then we
+		// subtract half of the button width. That way, we can get the x coordinate of the (top) left corner,
+		// for drawing later
 
 		if (options.indexOf("top") > -1) {
 			y = padding;
@@ -100,8 +100,9 @@ public class Button implements MouseListener {
 	public void draw(Graphics graphics, int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
-		this.height = height;
 		this.width = width;
+		this.height = height;
+		
 		graphics.setColor(color);
 		
 		if (pressed) {
@@ -127,12 +128,11 @@ public class Button implements MouseListener {
 		// (center of rectangle x) - (half of the rectangle width)
 		int labelX = (x + (width / 2)) - (labelWidth / 2);
 		
-		//TODO: remove the +15px and get it to work
-		int labelY = (y + (height / 2)) - (labelHeight / 2) + 15;
-		//System.out.println(y);
-		//System.out.println(height);
-		//System.out.println(labelHeight);
-		//System.out.println(labelY);
+		
+		//TODO: remove the +20px and get it to work
+		int labelY = (y + (height / 2)) - (labelHeight / 2) + 20;
+
+		
 		label.draw(graphics, labelX, labelY);
 	}
 
