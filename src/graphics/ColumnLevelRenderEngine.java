@@ -25,24 +25,37 @@ public class ColumnLevelRenderEngine {
 		Digit[][] grid = level.getAlignedDigitGrid();
 		Digit digit;
 		String text = "";
-		Label label;
+		Label[][] label = new Label[grid.length][grid[0].length];
+		int levelWidth, levelHeight, levelX, levelY;//the width and height of the level area, and the x and y area.
+		
+		//calculate level's width, height, x, and y
+		levelWidth = panel.getWidth() / 2;
+		levelHeight = panel.getHeight() / 2;
+		levelX = panel.getWidth() - (levelWidth / 2);
+		levelY = panel.getHeight() - (levelHeight / 2);
+		//demo rectangle
+		graphics.drawRect(levelX, levelY,  levelWidth,  levelHeight);
+		
+		
+		int rowLength;
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[x].length; y++) {
-				System.out.println(grid[x].length);
-				System.out.println(x);
-				System.out.println(y);
+				
 				digit = grid[x][y];
+				
 				if (digit.isSpace()) {
-					text += " " + "  ";//space in two strings for clarity, first space is the space we add, 
-					//the second is the space automatically added to all digits or spaces
+					
+					continue;
+				} else if (!digit.isVisible()) {
+					//draw a empty box
 					continue;
 				}
 				
-				text += (String.valueOf(digit.getValue())) + "  ";
+				label[x][y] = new Label(String.valueOf(digit.getValue()), rubik);
+				
 			}
 			text += "\n";
 		}
-		label = new Label(text, rubik);
-		label.draw(graphics, panel, Label.CENTER);
+		
 	}
 }

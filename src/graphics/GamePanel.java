@@ -36,18 +36,11 @@ public class GamePanel extends JPanel /*implements ButtonListener*/ {
 		this.game = game;
 
 		Font rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN,
-				50);
+				20);
 
 		title = new Label("Game", rubik);
 		colLevelRenderEngine = new ColumnLevelRenderEngine(this);
-		
-		//System.out.println(title.getFont().getSize());
-		//rubik.setSize(15);
-		//System.out.println(title.getFont().getSize());
-		//playButtonLabel = new Label("Play", rubik, Color.WHITE);
 
-		//playButton = new Button(Color.BLUE, playButtonLabel, this);
-		//playButton.addButtonListener(this);
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -55,27 +48,12 @@ public class GamePanel extends JPanel /*implements ButtonListener*/ {
 		int width = frame.getWidth();
 		int height = frame.getHeight();
 		//System.out.println(title.getFont().getSize());
-		title.draw(graphics, width, height, Label.CENTER, 0, -50);
+		title.draw(graphics, width, height, Label.TOP, 0, 75);
 		
 		colLevelRenderEngine.render(graphics);
 		//playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
 
 	}
 	
-/*
-	public void buttonPressed(MouseEvent e) {
-		System.out.println("Button pressed");
 
-	}
-
-	public void buttonClicked(MouseEvent e) {
-		System.out.println("Button clicked");
-		// System.out.println(e);
-	}
-
-	public void buttonReleased(MouseEvent e) {
-		System.out.println("Button released");
-
-	}
-*/
 }
