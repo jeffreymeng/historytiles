@@ -2,38 +2,38 @@ package level;
 
 public class Digit {
 	private byte value;
-	private boolean visible;
+	private boolean isVisible;
 	private boolean isSpace;
 	
 	public Digit(int value) {
 		this.value = (byte) value;
-		this.visible = true;
+		this.isVisible = true;
 		this.isSpace = false;
 	}
 	
 	public Digit(int value, boolean visible) {
 		this.value = (byte) value;
-		this.visible = visible;
+		this.isVisible = visible;
 		this.isSpace = false;
 	}
 	public Digit(int value, boolean visible, boolean isSpace) {
 		this.value = (byte) value;
-		this.visible = visible;
+		this.isVisible = visible;
 		this.isSpace = false;
 	}
 	public Digit(boolean visible, boolean isSpace) {
 		
 		this.isSpace = true;
-		this.visible = visible;
+		this.isVisible = visible;
 	}
 	public Digit(byte value) {
 		this.value = value;
-		this.visible = true;
+		this.isVisible = true;
 	}
 	
 	public Digit(byte value, boolean visible) {
 		this.value = value;
-		this.visible = visible;
+		this.isVisible = visible;
 	}
 	
 	public int getValue() {
@@ -50,10 +50,10 @@ public class Digit {
 		this.value =  value;
 	}
 	public boolean isVisible() {
-		return visible;
+		return isVisible;
 	}
 	public void setVisible(boolean visible) {
-		this.visible = visible;
+		this.isVisible = visible;
 	}
 
 	public boolean isSpace() {
