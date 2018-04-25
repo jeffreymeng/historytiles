@@ -14,12 +14,12 @@ public class ColumnLevel extends Level {
 													// sum/difference/product/quotient
 													// */} }
 	private Digit[][] alignedDigitGrid; // same as numGrid except all numbers
-										// are right-aligned, empty spaces are
-										// space digits
+									   // are right-aligned, empty spaces are
+									   // space digits
 	private int numVariables;
 	// TODO: set null allignedDigitGrid elements to space digits
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format
-									// {row, column, answer}
+								 // {row, column, answer}
 	// stores answers and their locations in digitGrid
 	private char operation; // should be one of the final static variables below
 	private int maxNumLength;

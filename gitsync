@@ -4,9 +4,9 @@
 if [ $#==0 ]
 then
     echo "
-GITSYNC LIGHT VERSION: Current Directory only
+GITSYNC LIGHT VERSION: current directory only
 
-usage: gitsync <commit message (multiple words OK)>
+Usage: gitsync <commit message (multiple words OK)>
 
 Gitsync is a tool to help you automatically commit in GitHub.
 The first argument passed should be the path, relative to the base path.
