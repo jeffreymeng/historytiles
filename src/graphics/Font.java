@@ -10,7 +10,7 @@ import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 
-//this class is basically a holder for the basic font class, except 
+//this class is basically a holder for the awt font class, except 
 // Maybe extend Font in the future?
 public class Font {
 	private java.awt.Font font;

@@ -33,7 +33,7 @@ public class Button implements MouseListener {
 	public final static Color BLUE = new Color(0, 0, 255);
 
 	// concatenate option strings to create an option modifier.
-
+	//in the future: maybe extend JButton?
 	public Button(Color color, Label label, JPanel panel) {
 		this.color = color;
 		this.label = label;

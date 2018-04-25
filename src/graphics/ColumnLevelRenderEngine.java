@@ -52,7 +52,7 @@ public class ColumnLevelRenderEngine {
 				}
 				
 				label[x][y] = new Label(String.valueOf(digit.getValue()), rubik);
-				
+				//label[x][y].draw(graphics, x, y);
 			}
 			text += "\n";
 		}
