@@ -10,7 +10,7 @@ import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 
-//this class is basically a holder for the basic font class, except 
+//this class is basically a holder for the awt font class, except 
 // Maybe extend Font in the future?
 public class Font {
 	private java.awt.Font font;
@@ -24,7 +24,7 @@ public class Font {
 		// a try catch statement is a way to safely run some code that might
 		// cause an exception
 		// without having all the code break if an exception is thrown.
-		// in this case, it might be a corrupted file
+		// in this case, it might be a corrupted file.
 
 		try {
 			// can't think of a descriptive name for this class other than Font.
