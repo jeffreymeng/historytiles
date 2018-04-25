@@ -151,7 +151,7 @@ public class EquationLevel extends Level {
 
 		addVariables();		
 	}
-
+ 
 	private void addVariables() {
 		for (int i = 0; i < numVariables; i++) {
 			int randIndex = Utils.randInt(0, equation.length - 1);
