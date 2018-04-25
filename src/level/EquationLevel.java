@@ -4,7 +4,6 @@
  * Purpose:
  */
 
-
 package level;
 
 import util.Utils;
@@ -23,13 +22,10 @@ public class EquationLevel extends Level {
 
 	private int numVariables;
 	private Object[] equation;
+	private int[][] hiddenDigits; // effectively an array of 3-tuples in format {index, answer} (index in equation)
 
 	public EquationLevel(int numVariables, String... formatModifiers) {
-		
-		int[] randIntArray = {Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10)}
-		
-		EquationLevel(numVariables, randIntArray, formatModifiers);
-
+		this(numVariables, new int[] {Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10), Utils.randInt(0, 10)}, formatModifiers);
 	}
 
 	public EquationLevel(int numVariables, int[] numbers, String... formatModifiers) {
@@ -151,19 +147,37 @@ public class EquationLevel extends Level {
 		else
 			equation[resultIndex] = new Digit(result);
 
+		hiddenDigits = new int[numVariables][2];
+
 		addVariables();		
 	}
 
 	private void addVariables() {
 		for (int i = 0; i < numVariables; i++) {
 			int randIndex = Utils.randInt(0, equation.length - 1);
-			if (equation[randIndex] instanceof Digit)
+			if (equation[randIndex] instanceof Digit) {
 				((Digit)equation[randIndex]).setVisible(false);
-			else if (equation[randIndex] instanceof Number)
+				hiddenDigits[i][0] = randIndex;
+				hiddenDigits[i][1] = ((Digit)equation[randIndex]).getValue();
+			} else if (equation[randIndex] instanceof Number) {
 				((Number)equation[randIndex]).setVisible(false);
-			else
-				i--; // do not increment counter if randIndex did not select a Digit or Number
+				hiddenDigits[i][0] = randIndex;
+				hiddenDigits[i][1] = ((Number)equation[randIndex]).getValue();
+			} else
+				i--; // do not increment counter if randIndex did not select a Digit or Number (e.g. if an Operator was selected)
+			// for loop increments i automatically so decrementing i results in a net change of zero
 		}
+	}
+
+	public boolean fill(int index, int number) {
+		if (hiddenDigits[index][1] == number) {
+			if (equation[index] instanceof Digit) {
+				((Digit) equation[index]).setVisible(true);
+			} else if (equation[index] instanceof Number)
+				((Number) equation[index]).setVisible(true);
+			return true;
+		} else
+			return false;
 	}
 
 	public int getDigitValue(int index) {
@@ -171,6 +185,13 @@ public class EquationLevel extends Level {
 			return ((Digit)equation[index]).getValue();
 		else
 			return -1;
+	}
+
+	public String toString() {
+		String result = "";
+		for (int i = 0; i < equation.length; i++)
+			result += equation[i].toString();
+		return result;
 	}
 
 }

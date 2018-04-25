@@ -29,7 +29,7 @@ public class Number {
 		for (int i = 0; i < digits.length; i++)
 			this.digits[i] = new Digit(digits[i]);
 	}
-	
+
 	public Number(Digit... digits) {
 		this.digits = digits;
 	}
@@ -40,12 +40,33 @@ public class Number {
 			string += digits[i];
 		return string;
 	}
-	
+
+	public Digit[] getDigits() {
+		return digits;
+	}
+
+	public void setDigits(int... digits) {
+		for (int i = 0; i < digits.length; i++)
+			this.digits[i] = new Digit(digits[i]);
+	}
+
+	public void setDigits(Digit... digits) {
+		this.digits = digits;
+	}
+
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
 	}
-	
+
+	public boolean isVisible() {
+		return isVisible;
+	}
+
 	public int getNumDigits() {
 		return digits.length;
+	}
+	
+	public int getValue() {
+		return Integer.parseInt(this.toString()); // convert the string interpretation of this Number to an int
 	}
 }
