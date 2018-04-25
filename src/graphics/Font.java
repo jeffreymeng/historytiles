@@ -24,7 +24,7 @@ public class Font {
 		// a try catch statement is a way to safely run some code that might
 		// cause an exception
 		// without having all the code break if an exception is thrown.
-		// in this case, it might be a corrupted file
+		// in this case, it might be a corrupted file.
 
 		try {
 			// can't think of a descriptive name for this class other than Font.

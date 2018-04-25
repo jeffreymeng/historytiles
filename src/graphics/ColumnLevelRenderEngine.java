@@ -26,36 +26,58 @@ public class ColumnLevelRenderEngine {
 		Digit digit;
 		String text = "";
 		Label[][] label = new Label[grid.length][grid[0].length];
-		int levelWidth, levelHeight, levelX, levelY;//the width and height of the level area, and the x and y area.
-		
-		//calculate level's width, height, x, and y
+		int levelWidth, levelHeight, levelX, levelY;// the width and height of
+													// the level area, and the x
+													// and y area.
+
+		// calculate level's width, height, x, and y
 		levelWidth = panel.getWidth() / 2;
 		levelHeight = panel.getHeight() / 2;
-		levelX = panel.getWidth() - (levelWidth / 2);
-		levelY = panel.getHeight() - (levelHeight / 2);
-		//demo rectangle
-		graphics.drawRect(levelX, levelY,  levelWidth,  levelHeight);
-		
-		
-		int rowLength;
+		levelX = (panel.getWidth() / 2) - (levelWidth / 2);
+		levelY = (panel.getHeight() / 2) - (levelHeight / 2);
+		// demo rectangle
+		graphics.drawRect(levelX, levelY, levelWidth, levelHeight);
+		int labelX, labelY, labelContainerWidth, labelContainerHeight, labelLeftmost, labelTopmost;
+		// labelContainerWidth refers to the box that contains the label, within
+		// which we center the number, as opposed to the width of the text
+		// itself. the same applies to labelContainerHeight
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[x].length; y++) {
-				
+
 				digit = grid[x][y];
-				
+
 				if (digit.isSpace()) {
-					
+
 					continue;
-				} else if (!digit.isVisible()) {
-					//draw a empty box
+				}
+				//we do these calculations here, above the if statement, because
+				//some of them are useful when drawing the box for a hidden number
+				labelContainerWidth = levelWidth / grid.length;
+				labelLeftmost = (levelX + (labelContainerWidth * x));
+				labelX = labelLeftmost + (labelContainerWidth / 2);
+
+				labelContainerHeight = levelHeight / grid[x].length;
+				labelTopmost = levelY + (labelContainerHeight * y);
+				labelY = labelTopmost + (labelContainerHeight / 2);
+				
+				if (!digit.isVisible()) {
+					// draw a empty box
+					//TODO: add padding for box
+					graphics.drawRect(labelLeftmost, labelTopmost, labelContainerWidth, labelContainerHeight);
 					continue;
 				}
 				
 				label[x][y] = new Label(String.valueOf(digit.getValue()), rubik);
-				//label[x][y].draw(graphics, x, y);
+
+				System.out.println(levelWidth);
+				System.out.println(grid[x].length);
+
+				
+
+				label[x][y].draw(graphics, labelX, labelY);
 			}
 			text += "\n";
 		}
-		
+
 	}
 }
