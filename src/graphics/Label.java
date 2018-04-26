@@ -108,8 +108,12 @@ public class Label {
 		int textWidth = graphics.getFontMetrics().stringWidth(text);
 		int textHeight = graphics.getFontMetrics().getHeight();
 
-		y = y - (((lines * textHeight) + (padding * lines)) / 2);
+		
+		//centers at y
+		//y = y - (((lines * textHeight) + (lines * padding)) / 2);
 
+		
+		//draw the string at the y coordinate of the next line
 		for (int i = 0; i < textComponents.length; i++) {
 			graphics.drawString(textComponents[i], x,
 					(y + (i * (padding + textHeight))));

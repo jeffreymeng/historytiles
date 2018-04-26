@@ -129,8 +129,8 @@ public class Button implements MouseListener {
 		int labelX = (x + (width / 2)) - (labelWidth / 2);
 		
 		
-		//TODO: remove the +20px and get it to work
-		int labelY = (y + (height / 2)) - (labelHeight / 2) + 20;
+		//TODO: remove the +15px and get it to work
+		int labelY = (y + (height / 2)) - (labelHeight / 2) + 15;
 
 		
 		label.draw(graphics, labelX, labelY);
