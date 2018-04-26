@@ -4,6 +4,7 @@ public class Level {
 
 	protected int num1;
 	protected int num2;
+	protected int numVariables;
 	
 	public int getNum1() {
 		return num1;
@@ -19,6 +20,14 @@ public class Level {
 
 	public void setNum2(int num2) {
 		this.num2 = num2;
+	}
+	
+	public int getNumVariables() {
+		return numVariables;
+	}
+	
+	public void setNumVariables(int numVariables) {
+		this.numVariables = numVariables;
 	}
 	
 }
