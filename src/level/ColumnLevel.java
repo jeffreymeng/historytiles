@@ -16,7 +16,7 @@ public class ColumnLevel extends Level {
 	private Digit[][] alignedDigitGrid; // same as numGrid except all numbers
 									   // are right-aligned, empty spaces are
 									   // space digits
-	private int numVariables;
+	//private int numVariables;
 	// TODO: set null allignedDigitGrid elements to space digits
 	private int[][] hiddenDigits; // effectively an array of 3-tuples in format
 								 // {row, column, answer}
@@ -186,11 +186,11 @@ public class ColumnLevel extends Level {
 	 */
 	private void fillDigitGrid(int num1, int num2) {
 		/*
-		 * For each digit of num1: - find the value of that digit by converting
-		 * num1 to a string and using the charAt and getNumericValue methods -
-		 * construct a new Digit using that value with visibility set to true -
-		 * store that Digit in the next empty space in the first row of
-		 * digitGrid
+		 * For each digit of num1:
+		 * - find the value of that digit by converting num1 to a string and using the charAt and
+		 *   getNumericValue methods
+		 * - construct a new Digit using that value with visibility set to true
+		 * - store that Digit in the next empty space in the first row of digitGrid
 		 */
 		String num1String = String.valueOf(num1); // converts num1 to string
 		digitGrid[0] = new Digit[num1String.length()]; // set the first row of
@@ -488,13 +488,16 @@ public class ColumnLevel extends Level {
 		System.out.println("Length: " + getDigitGridLength());
 	}
 
-	// debug
-	public static void main(String[] args) {
-		ColumnLevel cl = new ColumnLevel(ColumnLevel.ADDITION);
-		cl.printDigitGrid();
-		cl.addVariables();
-		int[] answers = cl.getAnswers();
-		// Utils.printArray(answers);
-		System.out.println(cl.fill(0, answers[0]));
+	public void setNumVariables(int numVariables) {
+		super.setNumVariables(numVariables);
+		clearVariables(); // remove current variables
+		addVariables(); // re-add variables using new value of numVariables
+	}
+	
+	// remove all variables (sets the isVisible property of all Digits to true)
+	public void clearVariables() {
+		for (int i = 0; i < digitGrid.length; i++)
+			for (int j = 0; j < digitGrid[i].length; j++)
+				digitGrid[i][j].setVisible(true);
 	}
 }
