@@ -14,15 +14,15 @@ import level.*;
 import level.Number;
 
 @SuppressWarnings("serial")
-public class EquationLevelPanel extends JPanel {
+public class EquationLevelRenderEngine extends JPanel {
 
-	private EquationLevel level = new EquationLevel(1, EquationLevel.COEFFICIENT, EquationLevel.MULTIPLY);
+	private EquationLevel level = new EquationLevel(1, EquationLevel.COEFFICIENT, EquationLevel.MULTIPLY, EquationLevel.CONSTANT);
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
 
-	public void setupWindow(EquationLevelPanel p) {
+	public void setupWindow(EquationLevelRenderEngine p) {
 		JFrame f = new JFrame("Equation Level Panel");
 
 		Object[] equation = level.getEquation();
@@ -56,7 +56,7 @@ public class EquationLevelPanel extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		EquationLevelPanel p = new EquationLevelPanel();
+		EquationLevelRenderEngine p = new EquationLevelRenderEngine();
 		p.setupWindow(p);
 	}
 }
