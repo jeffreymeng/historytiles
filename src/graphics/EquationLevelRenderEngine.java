@@ -17,6 +17,8 @@ import level.Number;
 public class EquationLevelRenderEngine extends JPanel {
 
 	private EquationLevel level = new EquationLevel(1, EquationLevel.COEFFICIENT, EquationLevel.MULTIPLY, EquationLevel.CONSTANT);
+	private JPanel[] equationPanels;
+	private JLabel[] equationLabels;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -27,18 +29,18 @@ public class EquationLevelRenderEngine extends JPanel {
 
 		Object[] equation = level.getEquation();
 
-		f.setLayout(new GridLayout(1, equation.length));
+		f.setLayout(new GridLayout(1, equation.length)); // one row; one column for each equation component
 
-		JPanel[] equationPanels = new JPanel[equation.length];
-		JLabel[] equationLabels = new JLabel[equation.length];
+		equationPanels = new JPanel[equation.length];
+		equationLabels = new JLabel[equation.length];
 
 		for (int i = 0; i < equation.length; i++) {
 			if (equation[i] instanceof Digit && !((Digit) equation[i]).isVisible()) {
 				equationLabels[i] = new JLabel("?");
 			} else if (equation[i] instanceof Number && !((Number) equation[i]).isVisible()) {
-				String questionMarks = "";
-				for (int j = 0; j < ((Number) equation[i]).getNumDigits(); j++)
-					questionMarks += "?";
+				String questionMarks = ""; // sequence of question marks, one for each digit
+				for (int j = 0; j < ((Number) equation[i]).getNumDigits(); j++) // for each digit in equation[i]
+					questionMarks += "?"; // add one question mark
 				equationLabels[i] = new JLabel(questionMarks);
 			} else {
 				equationLabels[i] = new JLabel(equation[i].toString());
@@ -55,8 +57,18 @@ public class EquationLevelRenderEngine extends JPanel {
 		f.setVisible(true);
 	}
 
+	public void fill(int index, int number) {
+		if (level.fill(index, number)) {
+			equationPanels[index].setBackground(Color.GREEN);
+			repaint(); // repaint to ensure that now-visible variable is displayed
+		} else {
+			equationPanels[index].setBackground(Color.RED);
+		}
+	}
+	
 	public static void main(String[] args) {
 		EquationLevelRenderEngine p = new EquationLevelRenderEngine();
 		p.setupWindow(p);
+		p.fill(0, 5);
 	}
 }

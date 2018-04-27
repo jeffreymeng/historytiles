@@ -164,7 +164,7 @@ public class EquationLevel extends Level {
 		else
 			equation[index] = new Digit(value);
 	}
-	
+
 	// attempts to fill a variable with a number
 	// returns whether the number was correct (true if it was correct, false otherwise)
 	public boolean fill(int index, int number) {
@@ -204,10 +204,10 @@ public class EquationLevel extends Level {
 			// if component is a hidden Digit variable
 			if (equation[i] instanceof Digit && !((Digit) equation[i]).isVisible()) {
 				// fill first empty slot in answers
-				for (int j = 0; j < answers.length; j++)			   // for each number in answers
-					if (answers[j] == 0) {							   // if slot is unfilled (default value is 0)
+				for (int j = 0; j < answers.length; j++)				  // for each number in answers
+					if (answers[j] == 0) {							  // if slot is unfilled (default value is 0)
 						answers[j] = ((Digit) equation[i]).getValue(); // fill slot
-						break; 										   // exit for loop so only one slot is filled
+						break;										  // exit for loop so only one slot is filled
 					} // if slot is already filled loop continues and looks at next slot
 			}
 
@@ -216,7 +216,7 @@ public class EquationLevel extends Level {
 				// fill first empty slot in answers
 				// same logic as above
 				for (int j = 0; j < answers.length; j++)
-					if (answers[j] == -1) {
+					if (answers[j] == 0) {
 						answers[j] = ((Number) equation[i]).getValue();
 						break;
 					}
@@ -238,6 +238,30 @@ public class EquationLevel extends Level {
 			result += equation[i].toString();
 		}
 		return result;
+	}
+
+	public int[] getVariableIndexes() {
+		int[] indexes = new int[numVariables];
+		for (int i = 0; i < equation.length; i++) { // for each component in equation
+			// if component is a hidden Digit variable
+			if (equation[i] instanceof Digit && !((Digit) equation[i]).isVisible()) {
+				// fill first empty slot in indexes with the index of the component
+				for (int j = 0; j < indexes.length; j++)				  // for each number in answers
+					if (indexes[j] == 0) {							  // if slot is unfilled (default value is 0)
+						indexes[j] = ((Digit) equation[i]).getValue(); // fill slot
+						break;										  // exit for loop so only one slot is filled
+					} // if slot is already filled loop continues and looks at next slot
+			} else if (equation[i] instanceof Number && !((Number) equation[i]).isVisible()) {
+				// fill first empty slot in indexes with the index of the component
+				// same logic as above
+				for (int j = 0; j < indexes.length; j++)
+					if (indexes[j] == 0) {
+						indexes[j] = ((Number) equation[i]).getValue();
+						break;
+					}
+			}
+		}
+		return indexes;
 	}
 
 	public static void main(String[] args) {
