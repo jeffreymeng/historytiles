@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 28 2018
- * Purpose:
+ * Purpose: This class contains the title portion of the game.
  */
 
 package graphics;
@@ -48,16 +48,16 @@ public class TitlePanel extends JPanel implements ButtonListener {
 
 	}
 
-	public void buttonPressed(MouseEvent e) {
+	public void buttonPressed(MouseEvent e, Button source) {
 
 	}
 
-	public void buttonClicked(MouseEvent e) {
+	public void buttonClicked(MouseEvent e, Button source) {
 		game.startGame();
 
 	}
 
-	public void buttonReleased(MouseEvent e) {
+	public void buttonReleased(MouseEvent e, Button source) {
 
 	}
 

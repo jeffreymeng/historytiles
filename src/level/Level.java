@@ -1,3 +1,8 @@
+/*
+ * Programmers: Jeffrey Meng and Dylan Yang
+ * Date: Mar 27, 2018
+ * Purpose: This class creates the base class to manage a level, from which other more specific level types extend off of.
+ */
 package level;
 
 public class Level {

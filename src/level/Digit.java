@@ -1,3 +1,8 @@
+/*
+ * Programmers: Jeffrey Meng and Dylan Yang
+ * Date: Mar 27, 2018
+ * Purpose: Provides a wrapper for a digit in a level.
+ */
 package level;
 
 public class Digit {

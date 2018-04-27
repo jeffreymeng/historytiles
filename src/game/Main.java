@@ -1,3 +1,8 @@
+/*
+ * Programmer: Jeffrey Meng and Dylan Yang
+ * Date: Mar 28 2018
+ * Purpose: Entry point into the program.
+ */
 package game;
 
 import graphics.*;

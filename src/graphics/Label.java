@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 28 2018
- * Purpose:
+ * Purpose: Basic class for text in Graphics, like JLabel.
  */
 
 package graphics;

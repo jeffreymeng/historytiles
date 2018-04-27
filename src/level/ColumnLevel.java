@@ -1,7 +1,7 @@
 /*
  * Programmers: Jeffrey Meng and Dylan Yang
  * Date: Mar 27, 2018
- * Purpose: to manage the numbers in a column-format level
+ * Purpose: This class manages a column format level.
  */
 
 package level;

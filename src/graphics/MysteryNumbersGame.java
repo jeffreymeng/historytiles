@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 30, 2018
- * Purpose:
+ * Purpose: This class creates an instance of the game to run.
  */
 
 package graphics;
@@ -21,7 +21,7 @@ public class MysteryNumbersGame {
 	}
 
 	public void setupWindow() {
-		int width = 500;
+		int width = 800;
 		int height = 600;
 
 		

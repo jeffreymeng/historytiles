@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 28 2018
- * Purpose:
+ * Purpose: Basic wrapper to simplify usage of the AWT.Font class.
  */
 
 package graphics;

@@ -1,7 +1,7 @@
 /*
  * Programmers: Jeffrey Meng and Dylan Yang
  * Date: Apr 4, 2018
- * Purpose: TODO
+ * Purpose: This class creates an operator for use in levels.
  */
 
 package level;

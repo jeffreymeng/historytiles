@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 28 2018
- * Purpose:
+ * Purpose: The panel containing the game portion of the game(as opposed to the title/menu portion, etc.)
  */
 
 package graphics;

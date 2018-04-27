@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 28 2018
- * Purpose:
+ * Purpose: A Button class, like JButton.
  */
 
 package graphics;
@@ -37,7 +37,6 @@ public class Button implements MouseListener {
 	public Button(Color color, Label label, JPanel panel) {
 		this.color = color;
 		this.label = label;
-		panel.addMouseListener(this);
 		this.panel = panel;
 
 	}
@@ -146,7 +145,7 @@ public class Button implements MouseListener {
 		if ((e.getX() > x && e.getX() < (x + width))
 				&& (e.getY() > y && e.getY() < (y + height))) {
 			// callback
-			buttonInterface.buttonClicked(e);
+			buttonInterface.buttonClicked(e, this);
 		}
 
 	}
@@ -164,7 +163,7 @@ public class Button implements MouseListener {
 			this.pressed = true;
 			this.pressedBeforeRepaint = true;
 			
-			buttonInterface.buttonPressed(e);
+			buttonInterface.buttonPressed(e, this);
 			panel.repaint();
 		}
 
@@ -176,7 +175,7 @@ public class Button implements MouseListener {
 			pressed = false;
 			this.releasedBeforeRepaint = true;
 			
-			buttonInterface.buttonReleased(e);
+			buttonInterface.buttonReleased(e, this);
 			panel.repaint();
 		}
 

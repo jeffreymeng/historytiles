@@ -1,7 +1,7 @@
 /*
  * Programmer: Jeffrey Meng and Dylan Yang
  * Date: Mar 26, 2018
- * Purpose: to manage the components of an equation level
+ * Purpose: This class manages the components of an equation - type level.
  */
 
 package level;

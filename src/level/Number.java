@@ -1,7 +1,7 @@
 /*
  * Programmers: Jeffrey Meng and Dylan Yang
  * Date: Apr 12, 2018
- * Purpose: TODO
+ * Purpose: This class holds a number, composed of one or more digits.
  */
 package level;
 

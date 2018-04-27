@@ -1,7 +1,7 @@
 /*
  * Programmers: Jeffrey Meng and Dylan Yang
  * Date: Apr 26, 2018
- * Purpose: TODO
+ * Purpose: This class contains the code for rendering an equation level.
  */
 
 package graphics;
