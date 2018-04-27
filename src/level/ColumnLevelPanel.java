@@ -1,5 +1,5 @@
 /*
-q * Programmers: Jeffrey Meng and Dylan Yang
+ * Programmers: Jeffrey Meng and Dylan Yang
  * Date: Apr 5, 2018
  * Purpose: TODO
  */
@@ -7,12 +7,9 @@ q * Programmers: Jeffrey Meng and Dylan Yang
 package level;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import java.awt.GridLayout;
 
-import level.*;
-
+@SuppressWarnings("serial")
 public class ColumnLevelPanel extends JPanel {
 	
 	private ColumnLevel level = new ColumnLevel('+');

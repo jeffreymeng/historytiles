@@ -10,9 +10,8 @@ import util.Utils;
 public class Number {
 
 	//private int numDigits;
-	private int value;
 	private Digit[] digits;
-	private boolean isVisible;
+	private boolean isVisible = true;
 
 	/*
 	public Number(int numDigits) {
@@ -39,7 +38,6 @@ public class Number {
 	}
 
 	public Number(int value) {
-		this.value = value;
 		digits = new Digit[Utils.getDigits(value)];
 		String valueString = String.valueOf(value); // convert value to string
 		for (int i = 0; i < valueString.length(); i++) // for each character in valueString

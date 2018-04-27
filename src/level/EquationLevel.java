@@ -18,7 +18,6 @@ public class EquationLevel extends Level {
 	public final static String MULTIPLY = "multiply"; // ax = b; a * (x + b) = c in combination with CONSTANT_LEFT
 	public final static String CONSTANT = "constant"; // x + a = b
 
-	//private int numVariables; // the number of variables in the equation level
 	private Object[] equation; // an array containing all components of the equation
 
 	// creates an equation with random numbers
@@ -61,18 +60,18 @@ public class EquationLevel extends Level {
 				|| !coefficient && multiplyLeft && !constantLeft) {
 			// a * b = c 
 			equation = new Object[5];
-			equation[0] = new Digit(numbers[0]);
+			addNumber(numbers[0], 0);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
-			equation[2] = new Digit(numbers[1]);
+			addNumber(numbers[1], 2);
 			equation[3] = new Operator(Operator.EQUALS);
 			result = getValue(0) * getValue(2);
 			resultIndex = 4;
 		} else if (!coefficient && !multiplyLeft && constantLeft) {
 			// a + b = c
 			equation = new Object[5];
-			equation[0] = new Digit(numbers[0]);
+			addNumber(numbers[0], 0);
 			equation[1] = new Operator(Operator.ADDITION);
-			equation[2] = new Digit(numbers[1]);
+			addNumber(numbers[1], 2);
 			equation[3] = new Operator(Operator.EQUALS);
 			result = getValue(0) + getValue(2);
 			resultIndex = 4;
@@ -83,12 +82,12 @@ public class EquationLevel extends Level {
 		else if (coefficient && multiplyLeft && !constantLeft) {
 			// a * (b * c) = d
 			equation = new Object[9];
-			equation[0] = new Digit(numbers[0]);
+			addNumber(numbers[0], 0);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
-			equation[3] = new Digit(numbers[1]);
+			addNumber(numbers[1], 3);
 			equation[4] = new Operator(Operator.MULTIPLICATION);
-			equation[5] = new Digit(numbers[2]);
+			addNumber(numbers[2], 5);
 			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
 			equation[7] = new Operator(Operator.EQUALS);
 			result = getValue(0) * getValue(3) * getValue(5);
@@ -96,23 +95,23 @@ public class EquationLevel extends Level {
 		} else if (coefficient && !multiplyLeft && constantLeft) {
 			// a * b + c = d
 			equation = new Object[7];
-			equation[0] = new Digit(numbers[0]);
+			addNumber(numbers[0], 0);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
-			equation[2] = new Digit(numbers[1]);
+			addNumber(numbers[1], 2);
 			equation[3] = new Operator(Operator.ADDITION);
-			equation[4] = new Digit(numbers[2]);
+			addNumber(numbers[2], 4);
 			equation[5] = new Operator(Operator.EQUALS);
 			result = getValue(0) * getValue(2) + getValue(4);
 			resultIndex = 6;
 		} else if (!coefficient && multiplyLeft && constantLeft) {
 			// a * (b + c) = d
 			equation = new Object[9];
-			equation[0] = new Digit(numbers[0]);
+			addNumber(numbers[0], 0);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
-			equation[3] = new Digit(numbers[1]);
+			addNumber(numbers[1], 3);
 			equation[4] = new Operator(Operator.ADDITION);
-			equation[5] = new Digit(numbers[2]);
+			addNumber(numbers[2], 5);
 			equation[6] = new Operator(Operator.CLOSE_PARENTHESES);
 			equation[7] = new Operator(Operator.EQUALS);
 			result = getValue(0) * (getValue(3) + getValue(5));
@@ -124,31 +123,29 @@ public class EquationLevel extends Level {
 		else if (coefficient && multiplyLeft && constantLeft) {
 			// a * (b * c + d) = e
 			equation = new Object[11];
-			equation[0] = new Digit(numbers[0]);
+			addNumber(numbers[0], 0);
 			equation[1] = new Operator(Operator.MULTIPLICATION);
 			equation[2] = new Operator(Operator.OPEN_PARENTHESES);
-			equation[3] = new Digit(numbers[1]);
+			addNumber(numbers[1], 3);
 			equation[4] = new Operator(Operator.MULTIPLICATION);
-			equation[5] = new Digit(numbers[2]);
+			addNumber(numbers[2], 5);
 			equation[6] = new Operator(Operator.ADDITION);
-			equation[7] = new Digit(numbers[3]);
+			addNumber(numbers[3], 7);
 			equation[8] = new Operator(Operator.CLOSE_PARENTHESES);
 			equation[9] = new Operator(Operator.EQUALS);
 			result = getValue(0) * ( getValue(3) * getValue(5) + getValue(7) );
 			resultIndex = 10;
 		}
 
-		if (Utils.getDigits(result) > 1) // if result has more than one digit
-			equation[resultIndex] = new Number(result);
-		else
-			equation[resultIndex] = new Digit(result);
+		addNumber(result, resultIndex);
 
 		addVariables();		
 	}
 
+	// hides random numbers in the equation to make them variables
 	private void addVariables() {
 		for (int i = 0; i < numVariables; i++) {
-			int randIndex = Utils.randInt(0, equation.length - 1);
+			int randIndex = Utils.randInt(0, equation.length);
 			if (equation[randIndex] instanceof Digit) {
 				((Digit) equation[randIndex]).setVisible(false);
 			} else if (equation[randIndex] instanceof Number) {
@@ -160,6 +157,14 @@ public class EquationLevel extends Level {
 		}
 	}
 
+	// adds a number of the appropriate type (Digit or Number) at a specified location in equation
+	private void addNumber(int value, int index) {
+		if (value > 9) // if result has more than one digit
+			equation[index] = new Number(value);
+		else
+			equation[index] = new Digit(value);
+	}
+	
 	// attempts to fill a variable with a number
 	// returns whether the number was correct (true if it was correct, false otherwise)
 	public boolean fill(int index, int number) {
