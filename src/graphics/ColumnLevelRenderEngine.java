@@ -21,7 +21,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 	int numHiddenDigits;
 	int numSolvedDigits;// represents the number of digits that the user has filled out. If the user has
 						// filled out a digit incorrectly it is still counted.
-	int focusSlot = -1;// the digit slot that the user is focused on. This corresponds to an element in
+	int focusSlot;// the digit slot that the user is focused on. This corresponds to an element in
 						// the clickzones array.
 
 	// these five variabes make the levels harder as you play for longer
@@ -70,6 +70,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 
 		lastSubmitAttemptMessage = "";
 		textPrinted = false;
+		focusSlot = -1;
 	}
 
 	public void render(Graphics graphics) {
