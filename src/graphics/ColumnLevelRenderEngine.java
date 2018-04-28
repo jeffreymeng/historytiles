@@ -22,7 +22,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 	int numSolvedDigits;// represents the number of digits that the user has filled out. If the user has
 						// filled out a digit incorrectly it is still counted.
 	int focusSlot;// the digit slot that the user is focused on. This corresponds to an element in
-						// the clickzones array.
+					// the clickzones array.
 
 	// these five variabes make the levels harder as you play for longer
 	int numVariables = 1;
@@ -233,10 +233,10 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		signLabel.draw(graphics, signX, signY);
 
 		// debugging
-		 if (!textPrinted) {
-		 System.out.println(text);
-		 textPrinted = true;
-		 }
+		// if (!textPrinted) {
+		// 	System.out.println(text);
+		// 	textPrinted = true;
+		// }
 	}
 
 	public void drawInputTray(Graphics graphics) {
@@ -295,6 +295,9 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		Digit[][] grid = level.getAlignedDigitGrid();
 		Digit digit;
 		int num1, num2;
+		//System.out.println(buildNumber(grid[0]));
+		//System.out.println(buildNumber(grid[1]));
+		//System.out.println(buildNumber(grid[2]));
 
 		if (buildNumber(grid[0]) + buildNumber(grid[1]) == buildNumber(grid[2])) {
 			// user is correct
@@ -305,7 +308,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 			// to complete to get the next variable.
 			if (numVariables <= maxVariables) {// once they limit the threshold the difficulty stays the same
 				numSolvedInCurrentIncreaseCycle++;
-				numSolved ++;
+				numSolved++;
 				if (numSolvedInCurrentIncreaseCycle >= numToNextVariableIncrease) {
 					numSolvedInCurrentIncreaseCycle = 0;
 					numToNextVariableIncrease++;
