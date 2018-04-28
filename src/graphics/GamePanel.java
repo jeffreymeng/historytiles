@@ -12,7 +12,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import level.*;
 
-public class GamePanel extends JPanel /*implements ButtonListener*/ {
+public class GamePanel extends JPanel /* implements ButtonListener */ {
 	final int width = 800;
 	final int height = 600;
 	JFrame frame = new JFrame("Mystery Numbers");
@@ -27,18 +27,20 @@ public class GamePanel extends JPanel /*implements ButtonListener*/ {
 	Color resetButtonColor = BLUE;
 	MysteryNumbersGame game;
 	Button playButton;
-	Label title, playButtonLabel;
+	Label title, playButtonLabel, instructions;
 	ColumnLevelRenderEngine colLevelRenderEngine;
+
 	public GamePanel(JFrame frame, MysteryNumbersGame game) {
 		super();
 
 		this.frame = frame;
 		this.game = game;
 
-		Font rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN,
-				20);
+		Font rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN, 20);
 
-		title = new Label("Game", rubik);
+		title = new Label("Mystery Numbers", rubik);
+		rubik.setSize(15);
+		
 		colLevelRenderEngine = new ColumnLevelRenderEngine(this);
 
 	}
@@ -47,13 +49,13 @@ public class GamePanel extends JPanel /*implements ButtonListener*/ {
 		super.paintComponent(graphics);
 		int width = frame.getWidth();
 		int height = frame.getHeight();
-		//System.out.println(title.getFont().getSize());
-		title.draw(graphics, width, height, Label.TOP, 0, 75);
+		// System.out.println(title.getFont().getSize());
+		title.draw(graphics, width, height, Label.TOP, 0, 40);
 		
+
 		colLevelRenderEngine.render(graphics);
-		//playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
+		// playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
 
 	}
-	
 
 }

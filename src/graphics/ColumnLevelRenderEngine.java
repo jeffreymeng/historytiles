@@ -20,12 +20,13 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 	int numHiddenDigits;
 	int numSolvedDigits;// represents the number of digits that the user has filled out. If the user has
 						// filled out a digit incorrectly it is still counted.
-	int focusSlot;// the digit slot that the user is focused on. This corresponds to an element in
+	int focusSlot = -1;// the digit slot that the user is focused on. This corresponds to an element in
 					// the clickzones array.
 	int[] hiddenDigits;
 
 	// clickzones. The order refers to the order of
 	Clickzone[] clickzones;
+	int[] clickzoneValues;// praralell to above array, contains user's filled in values
 
 	public ColumnLevelRenderEngine(JPanel panel) {
 		this.panel = panel;
@@ -38,6 +39,13 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 			buttons[i] = new Button(Button.BLUE, new Label(String.valueOf(i), rubik), panel);
 
 			buttons[i].addButtonListener(this);
+		}
+		
+		//initialize this first because it must persist.
+		clickzoneValues = new int[level.getNumVariables()];
+		
+		for (int i = 0; i < clickzoneValues.length; i ++) {
+			clickzoneValues[i] = -1;
 		}
 	}
 
@@ -92,6 +100,10 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 
 		// init the clickzones array
 		clickzones = new Clickzone[level.getNumVariables()];
+		
+		
+		
+		
 		int filledClickzoneSlots = 0;
 
 		for (int y = 0; y < grid.length; y++) {
@@ -138,22 +150,31 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 				text += digit.getValue();
 
 				if (!digit.isVisible()) {
-					//filledClickzoneSlots is the current slot index.
-					if (filledClickzoneSlots == focusSlot) {
+					// filledClickzoneSlots is the current slot index.
+					int currentSlot = filledClickzoneSlots;//for better readability
+					filledClickzoneSlots++;
+					if (currentSlot == focusSlot) {
 						graphics.setColor(Color.BLUE);
 					}
-						// draw a empty box
+					// draw a empty box
 					graphics.drawRect(labelLeftmost + labelBoxPadding, labelTopmost + labelBoxPadding + labelBoxOffset,
 							labelContainerWidth - (labelBoxPadding * 2),
 							labelContainerHeight - (labelBoxPadding * 2) - labelBoxOffset);
-					if (filledClickzoneSlots == focusSlot) {
+					if (currentSlot == focusSlot) {
 						graphics.setColor(Color.BLACK);
 					}
-					clickzones[filledClickzoneSlots] = new Clickzone(labelLeftmost + labelBoxPadding,
+					clickzones[currentSlot] = new Clickzone(labelLeftmost + labelBoxPadding,
 							labelTopmost + labelBoxPadding + labelBoxOffset,
 							labelContainerWidth - (labelBoxPadding * 2),
 							labelContainerHeight - (labelBoxPadding * 2) - labelBoxOffset, panel, this);
-					filledClickzoneSlots++;
+					System.out.println("VAL:" + clickzoneValues[currentSlot]);
+					System.out.println("current slot:" + currentSlot);
+					if (clickzoneValues[currentSlot] > -1) {
+						label[y][x] = new Label(String.valueOf(clickzoneValues[currentSlot]), rubik);
+						label[y][x].draw(graphics, labelX, labelY);
+					}
+						
+						
 					continue;
 				}
 
@@ -190,8 +211,10 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		int signY = signTopmost + (signContainerHeight / 2);
 		Label signLabel = new Label(String.valueOf(level.getOperation()), rubik);
 		signLabel.draw(graphics, signX, signY);
+		
 		// debugging
-		System.out.println(text);
+		
+		//System.out.println(text);
 	}
 
 	public void drawInputTray(Graphics graphics) {
@@ -251,7 +274,13 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 					break;
 				case 2:
 					// button released
-					System.out.println(i + " pressed.");
+					//System.out.println(i + " pressed.");
+					if (focusSlot > -1) {
+						clickzoneValues[focusSlot] = i;
+						System.out.println("Focus slot:" + focusSlot);
+						System.out.println("value:" + clickzoneValues[focusSlot]);
+						panel.repaint();
+					}
 					break;
 				default:
 					// uh oh
@@ -272,14 +301,14 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 
 	public void clickzoneReleased(MouseEvent e, Clickzone source) {
 		parseClickEvent(e, source, 2);
-		
+
 	}
 
 	public void parseClickEvent(MouseEvent e, Clickzone source, int type) {
-		//System.out.println(clickzones.length);
+		// System.out.println(clickzones.length);
 		for (int i = 0; i < clickzones.length; i++) {
-			//System.out.println(clickzones[i]);
-			//System.out.println(source);
+			// System.out.println(clickzones[i]);
+			// System.out.println(source);
 			if (clickzones[i] == source) {
 				switch (type) {
 				case 0:
@@ -292,8 +321,9 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 					break;
 				case 2:
 					// clickzone released
-					System.out.println("clickzone " + i + " released.");
+					//System.out.println("clickzone " + i + " released.");
 					focusSlot = i;
+					
 					panel.repaint();
 					break;
 				default:

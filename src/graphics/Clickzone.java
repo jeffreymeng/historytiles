@@ -41,18 +41,10 @@ public class Clickzone implements MouseListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		//System.out.println("CLICKZONE");
-		//System.out.println(x);
-		//System.out.println(y);
-		//System.out.println(width);
-		//System.out.println(height);
-		//System.out.println(e.getX());
-		//System.out.println(e.getY());
-		//System.out.println("CLICKZONE END");
-		//System.out.println((e.getX() > x && e.getX() < (x + width)) && (e.getY() > y && e.getY() < (y + height)));
+		
 		// check if the press was inside the button
 		if ((e.getX() > x && e.getX() < (x + width)) && (e.getY() > y && e.getY() < (y + height))) {
-			//System.out.println("hi");
+			
 			clickInterface.clickzonePressed(e, this);
 		}
 

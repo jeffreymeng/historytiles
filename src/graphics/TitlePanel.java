@@ -41,7 +41,15 @@ public class TitlePanel extends JPanel implements ButtonListener {
 		title.draw(graphics, width, height, Label.CENTER, 0, -50);
 
 		rubik.setSize(15);
-		Label version = new Label("version 1.0.0-beta.23", rubik);
+		/* TODO: fix instructions
+		Label instructions = new Label(
+				"INSTRUCTIONS\nClick on a slot to select it.\nThen click on a number button to fill it out.\nYou complete the level when the numbers add up.",
+				rubik);
+		instructions.draw(graphics, width, height, Label.HCENTER, 0, 100);
+		 */
+		
+		rubik.setSize(15);
+		Label version = new Label("version 1.0.0", rubik);
 		version.draw(graphics, width, height, Label.BOTTOM);
 
 		playButton.draw(graphics, 150, 50, Button.CENTER, 0, 75);
