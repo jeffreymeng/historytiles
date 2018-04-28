@@ -17,22 +17,28 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 	ColumnLevel level;
 	Font rubik;
 	Button[] buttons;
+	Button submitButton;
 	int numHiddenDigits;
 	int numSolvedDigits;// represents the number of digits that the user has filled out. If the user has
 						// filled out a digit incorrectly it is still counted.
 	int focusSlot = -1;// the digit slot that the user is focused on. This corresponds to an element in
 						// the clickzones array.
-	int[] hiddenDigits;
-
+	int numVariables = 1;
 	// clickzones. The order refers to the order of
 	Clickzone[] clickzones;
-	int[] clickzoneValues;// praralell to above array, contains user's filled in values
+	int[] clickzoneValues;// parallel to above array, contains user's filled in values
 	boolean textPrinted = false;// for debug printing
 
+	String lastSubmitAttemptMessage;// error message for user - should be short
+
 	public ColumnLevelRenderEngine(JPanel panel) {
+		makeNewLevel(panel);
+	}
+
+	public void makeNewLevel(JPanel panel) {
 		this.panel = panel;
 		rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN, 25);
-		level = new ColumnLevel(ColumnLevel.ADDITION);
+		level = new ColumnLevel(ColumnLevel.ADDITION, numVariables);
 		numHiddenDigits = level.getNumVariables();
 		// create the buttons
 		buttons = new Button[10];
@@ -48,11 +54,17 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		for (int i = 0; i < clickzoneValues.length; i++) {
 			clickzoneValues[i] = -1;
 		}
+		rubik.setSize(15);
+		submitButton = new Button(Button.BLUE, new Label("Submit", rubik), panel);
+		submitButton.addButtonListener(this);
+
+		lastSubmitAttemptMessage = "";
 	}
 
 	public void render(Graphics graphics) {
 		drawGrid(graphics);
 		drawInputTray(graphics);
+		drawSubmitTray(graphics);
 	}
 
 	public void drawGrid(Graphics graphics) {
@@ -105,7 +117,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		int filledClickzoneSlots = 0;
 
 		for (int y = 0; y < grid.length; y++) {
-			// TODO: add addition sign
+
 			for (int x = 0; x < grid[y].length; x++) {
 
 				digit = grid[y][x];
@@ -209,10 +221,10 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		signLabel.draw(graphics, signX, signY);
 
 		// debugging
-		if (!textPrinted) {
-			System.out.println(text);
-			textPrinted = true;
-		}
+		// if (!textPrinted) {
+		// System.out.println(text);
+		// textPrinted = true;
+		// }
 	}
 
 	public void drawInputTray(Graphics graphics) {
@@ -245,6 +257,79 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 
 	}
 
+	public void drawSubmitTray(Graphics graphics) {
+		int trayPadding = 10;
+		int trayHeight = panel.getHeight() / 15;
+		// we want the tray to be 1/10 to the bottom
+		int trayY = ((panel.getHeight() / 10) * 1) - (trayHeight / 2);
+		int trayWidth = panel.getWidth() / 2;
+		int trayX = (panel.getWidth() / 2) - (trayWidth / 2);
+		graphics.setColor(Color.BLACK);
+		// draw the tray border
+		graphics.drawRect(trayX - trayPadding, trayY - trayPadding, trayWidth + (trayPadding * 2),
+				trayHeight + (trayPadding * 2));
+
+		// draw the submit button. It takes up the right half
+
+		submitButton.draw(graphics, trayX + (trayWidth / 2), trayY, trayWidth / 2, trayHeight);
+
+		// last message label takes up the left half
+		Label lastMessageLabel = new Label(lastSubmitAttemptMessage, rubik, Color.BLACK);
+		lastMessageLabel.draw(graphics, trayX + 20/* padding */, trayY + 20/* padding */);
+
+	}
+
+	public void checkUserAnswer() {
+		Digit[][] grid = level.getAlignedDigitGrid();
+		Digit digit;
+		int num1, num2;
+
+		if (buildNumber(grid[0]) + buildNumber(grid[1]) == buildNumber(grid[2])) {
+			// user is correct
+
+			makeNewLevel(panel);
+
+		} else {
+			// user is incorrect
+			lastSubmitAttemptMessage = "Incorrect";
+		}
+		panel.repaint();
+
+	}
+
+	public int buildNumber(Digit[] row) {
+		int number = 0;
+		int userAnswer;
+		int currentClickzone = 0;
+		Digit digit;
+		for (int x = 0; x < row.length; x++) {
+
+			digit = row[x];
+
+			if (digit.isSpace()) {
+
+				continue;
+			}
+			if (!digit.isVisible()) {
+
+				userAnswer = clickzoneValues[currentClickzone];
+				if (userAnswer == -1) {
+					return -1;// user did not finish puzzle, immediately exit
+				}
+				currentClickzone++;
+
+				number += (userAnswer * Math.pow(10, row.length - x));
+				// we need to invert x to account for the allignment issues.
+
+				continue;
+			}
+
+			// Multiply by it's place value
+			number += (digit.getValue() * Math.pow(10, row.length - x));
+		}
+		return number;
+	}
+
 	public void buttonPressed(MouseEvent e, Button source) {
 		parseButtonEvent(e, source, 0);
 	}
@@ -273,6 +358,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 				case 2:
 					// button released
 					// System.out.println(i + " pressed.");
+
 					if (focusSlot > -1) {
 						clickzoneValues[focusSlot] = i;
 						panel.repaint();
@@ -283,6 +369,8 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 					System.out.println(
 							"ERROR in ColumnLevelRenderEngine. Expected type to be between 0 and 2, inclusive, but type wasan't.");
 				}
+			} else if (source == submitButton) {
+				checkUserAnswer();
 			}
 		}
 	}

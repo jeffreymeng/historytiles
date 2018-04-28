@@ -38,8 +38,7 @@ public class GamePanel extends JPanel /* implements ButtonListener */ {
 
 		Font rubik = new Font("src/fonts/Rubik/Rubik-Regular.ttf", Font.PLAIN, 20);
 
-		title = new Label("Mystery Numbers", rubik);
-		rubik.setSize(15);
+		
 		
 		colLevelRenderEngine = new ColumnLevelRenderEngine(this);
 
@@ -49,12 +48,12 @@ public class GamePanel extends JPanel /* implements ButtonListener */ {
 		super.paintComponent(graphics);
 		int width = frame.getWidth();
 		int height = frame.getHeight();
-		// System.out.println(title.getFont().getSize());
-		title.draw(graphics, width, height, Label.TOP, 0, 40);
+		
+		
 		
 
 		colLevelRenderEngine.render(graphics);
-		// playButton.draw(graphics, 150, 50, Button.CENTER, 0, 150);
+		
 
 	}
 

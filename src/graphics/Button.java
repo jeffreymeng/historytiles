@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 public class Button implements MouseListener {
 	ButtonListener buttonInterface;
+	boolean listenerAdded = false;
 	private Color color;
 	private Label label;
 	private int x, y, width, height;
@@ -29,15 +30,16 @@ public class Button implements MouseListener {
 	public final static String VCENTER = "vcenter";
 	public final static String HCENTER = "hcenter";
 	public final static String CENTER = VCENTER + HCENTER;
-	
+
 	public final static Color BLUE = new Color(0, 0, 255);
 
 	// concatenate option strings to create an option modifier.
-	//in the future: maybe extend JButton?
+	// in the future: maybe extend JButton?
 	public Button(Color color, Label label, JPanel panel) {
 		this.color = color;
 		this.label = label;
 		this.panel = panel;
+		panel.addMouseListener(this);
 
 	}
 
@@ -46,12 +48,14 @@ public class Button implements MouseListener {
 		label.setColor(labelColor);
 		this.label = label;
 		this.panel = panel;
+		panel.addMouseListener(this);
 
 	}
 
 	public void addButtonListener(ButtonListener listener) {
 		buttonInterface = listener;
-		panel.addMouseListener(this);
+		listenerAdded = true;
+
 	}
 
 	public void draw(Graphics graphics, int width, int height, String options) {
@@ -59,8 +63,7 @@ public class Button implements MouseListener {
 
 	}
 
-	public void draw(Graphics graphics, int width, int height, String options,
-			int xoffset, int yoffset) {
+	public void draw(Graphics graphics, int width, int height, String options, int xoffset, int yoffset) {
 		int panelWidth = panel.getWidth();
 		int panelHeight = panel.getHeight();
 		int x = -1;
@@ -69,7 +72,8 @@ public class Button implements MouseListener {
 		int padding = 25; // px
 
 		// to center something horizontally, we take half of the panel width, then we
-		// subtract half of the button width. That way, we can get the x coordinate of the (top) left corner,
+		// subtract half of the button width. That way, we can get the x coordinate of
+		// the (top) left corner,
 		// for drawing later
 
 		if (options.indexOf("top") > -1) {
@@ -101,9 +105,9 @@ public class Button implements MouseListener {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		
+
 		graphics.setColor(color);
-		
+
 		if (pressed) {
 			graphics.setColor(color.darker());
 		}
@@ -111,8 +115,8 @@ public class Button implements MouseListener {
 		graphics.fillRect(x, y, width, height);
 		graphics.setColor(color.darker().darker());
 		graphics.drawRect(x, y, width, height);
-		
-		//no color is set
+
+		// no color is set
 		if (label.getColor() == null) {
 			graphics.setColor(Color.white);
 			// temporarily set the color to white
@@ -123,59 +127,60 @@ public class Button implements MouseListener {
 		int labelWidth = graphics.getFontMetrics().stringWidth(label.getText());
 		int labelHeight = graphics.getFontMetrics().getHeight();
 
-
 		// (center of rectangle x) - (half of the rectangle width)
 		int labelX = (x + (width / 2)) - (labelWidth / 2);
-		
-		
-		//TODO: remove the +15px and get it to work
+
+		// TODO: remove the +15px and get it to work
 		int labelY = (y + (height / 2)) - (labelHeight / 2) + 15;
 
-		
 		label.draw(graphics, labelX, labelY);
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		//TODO: use clickzone instead
 		if (releasedBeforeRepaint) {
 			releasedBeforeRepaint = false;
-			return;	
+			return;
 		}
-		//System.out.println(e.getY());
-		//check if the click was inside the button
-		if ((e.getX() > x && e.getX() < (x + width))
-				&& (e.getY() > y && e.getY() < (y + height))) {
+		// System.out.println(e.getY());
+		// check if the click was inside the button
+		if ((e.getX() > x && e.getX() < (x + width)) && (e.getY() > y && e.getY() < (y + height))) {
 			// callback
-			buttonInterface.buttonClicked(e, this);
+			if (listenerAdded) {
+				buttonInterface.buttonClicked(e, this);
+			}
 		}
 
 	}
 
 	public void mousePressed(MouseEvent e) {
 		if (pressedBeforeRepaint) {
-			//because when we repaint the class, if the button is still pressed, this event will get called twice.
+			// because when we repaint the class, if the button is still pressed, this event
+			// will get called twice.
 			pressedBeforeRepaint = false;
 			return;
 		}
-		//check if the press was inside the button
-		if ((e.getX() > x && e.getX() < (x + width))
-				&& (e.getY() > y && e.getY() < (y + height))) {
-			
+		// check if the press was inside the button
+		if ((e.getX() > x && e.getX() < (x + width)) && (e.getY() > y && e.getY() < (y + height))) {
+
 			this.pressed = true;
 			this.pressedBeforeRepaint = true;
-			
-			buttonInterface.buttonPressed(e, this);
+			if (listenerAdded) {
+				buttonInterface.buttonPressed(e, this);
+			}
 			panel.repaint();
 		}
 
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		
+
 		if (pressed) {
 			pressed = false;
 			this.releasedBeforeRepaint = true;
-			
-			buttonInterface.buttonReleased(e, this);
+			if (listenerAdded) {
+				buttonInterface.buttonReleased(e, this);
+			}
 			panel.repaint();
 		}
 
