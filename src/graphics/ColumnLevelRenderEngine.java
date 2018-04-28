@@ -23,11 +23,21 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 						// filled out a digit incorrectly it is still counted.
 	int focusSlot = -1;// the digit slot that the user is focused on. This corresponds to an element in
 						// the clickzones array.
+
+	// these five variabes make the levels harder as you play for longer
 	int numVariables = 1;
+	int numSolved = 0;
+	int maxVariables = 6;
+	// the hardest level you can ever get, assuming more variables = harder level
+
+	int numToNextVariableIncrease = 1;
+	int numSolvedInCurrentIncreaseCycle = 0;
+	// resets each time a variable is added
+
 	// clickzones. The order refers to the order of
 	Clickzone[] clickzones;
 	int[] clickzoneValues;// parallel to above array, contains user's filled in values
-	boolean textPrinted = false;// for debug printing
+	boolean textPrinted;// for debug printing
 
 	String lastSubmitAttemptMessage;// error message for user - should be short
 
@@ -59,6 +69,7 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		submitButton.addButtonListener(this);
 
 		lastSubmitAttemptMessage = "";
+		textPrinted = false;
 	}
 
 	public void render(Graphics graphics) {
@@ -221,10 +232,10 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 		signLabel.draw(graphics, signX, signY);
 
 		// debugging
-		// if (!textPrinted) {
-		// System.out.println(text);
-		// textPrinted = true;
-		// }
+		 if (!textPrinted) {
+		 System.out.println(text);
+		 textPrinted = true;
+		 }
 	}
 
 	public void drawInputTray(Graphics graphics) {
@@ -286,6 +297,20 @@ public class ColumnLevelRenderEngine implements ButtonListener, ClickListener {
 
 		if (buildNumber(grid[0]) + buildNumber(grid[1]) == buildNumber(grid[2])) {
 			// user is correct
+			// calculate the number of variables in the next level.
+			// Generally, we start off at after each new level, gain a variable,
+			// however, each time you gain a variable, we add one to the number of levels
+			// you have
+			// to complete to get the next variable.
+			if (numVariables <= maxVariables) {// once they limit the threshold the difficulty stays the same
+				numSolvedInCurrentIncreaseCycle++;
+				numSolved ++;
+				if (numSolvedInCurrentIncreaseCycle >= numToNextVariableIncrease) {
+					numSolvedInCurrentIncreaseCycle = 0;
+					numToNextVariableIncrease++;
+					numVariables++;
+				}
+			}
 
 			makeNewLevel(panel);
 
