@@ -1,3 +1,6 @@
+# 5/17/18: This project has been moved to https://github.com/jeffreymeng/java/mysterynumbers
+
+
 # mysterynumbers
 
 ### Running the game:
